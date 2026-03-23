@@ -3,4 +3,4 @@ Gantt charts in Access with JavaScript
 
 ## Why Better Access Gantt Chart?
 
-Microsoft Access has a lot charts you can create. But there is no buildt-in possibiliy for Gantt charts. This project is filling this gap.
+Microsoft Access offers numerous chart types. However, Gantt charts are not included by default. This project fills that gap.
