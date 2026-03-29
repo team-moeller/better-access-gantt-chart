@@ -1,6 +1,6 @@
 Attribute VB_Name = "mdl_Helpers"
 '###############################################################################################
-'# Copyright (c) 2022 Thomas MÃ¶ller                                                            #
+'# Copyright (c) 2022 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
 '# Version 1.01.04  published: 29.03.2026                                                      #
 '###############################################################################################
