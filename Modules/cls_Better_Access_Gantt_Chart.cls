@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.01.04  published: 29.03.2026                                                      #
+'# Version 1.02.09  published: 30.03.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -25,6 +25,7 @@ Option Explicit
 
 Private WithEvents m_Control As Edge
 Attribute m_Control.VB_VarHelpID = -1
+Private m_Language As String
 
 
 '### Properties
@@ -36,12 +37,20 @@ Public Property Get Control() As Edge
     Set Control = m_Control
 End Property
 
+Public Property Let Language(newValue As String)
+    m_Language = newValue
+End Property
+Public Property Get Language() As String
+    Language = m_Language
+End Property
+
+
 
 '### Instanzing
 
 Private Sub Class_Initialize()
 
-    ' Do Nothing
+    Me.Language = "en"
     
 End Sub
 
@@ -126,7 +135,7 @@ Private Function getScript() As String
     strText = strText & "        ];" & vbCrLf
     strText = strText & "        const gantt = new Gantt('#gantt', tasks, {" & vbCrLf
     strText = strText & "            view_mode: 'Day'," & vbCrLf
-    strText = strText & "            language: 'de'" & vbCrLf
+    strText = strText & "            language: '" & Me.Language & "'" & vbCrLf
     strText = strText & "        });" & vbCrLf
     strText = strText & "    </script>" & vbCrLf
     
