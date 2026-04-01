@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.02.09  published: 30.03.2026                                                      #
+'# Version 1.03.06  published: 01.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -19,13 +19,22 @@ Option Explicit
 
 '### Enums
 
-
+Public Enum gcViewMode
+    vwHour = 1
+    vwQuarterDay = 2
+    vwHalfDay = 3
+    vwDay = 4
+    vwWeek = 5
+    vwMonth = 6
+    vwYear = 7
+End Enum
 
 '### Members
 
 Private WithEvents m_Control As Edge
 Attribute m_Control.VB_VarHelpID = -1
 Private m_Language As String
+Private m_ViewMode
 
 
 '### Properties
@@ -44,6 +53,12 @@ Public Property Get Language() As String
     Language = m_Language
 End Property
 
+Public Property Let ViewMode(newValue As gcViewMode)
+    m_ViewMode = newValue
+End Property
+Public Property Get ViewMode() As gcViewMode
+    ViewMode = m_ViewMode
+End Property
 
 
 '### Instanzing
@@ -134,7 +149,7 @@ Private Function getScript() As String
     strText = strText & getTaskData & vbCrLf
     strText = strText & "        ];" & vbCrLf
     strText = strText & "        const gantt = new Gantt('#gantt', tasks, {" & vbCrLf
-    strText = strText & "            view_mode: 'Day'," & vbCrLf
+    strText = strText & "            view_mode: " & getViewMode & "," & vbCrLf
     strText = strText & "            language: '" & Me.Language & "'" & vbCrLf
     strText = strText & "        });" & vbCrLf
     strText = strText & "    </script>" & vbCrLf
@@ -205,5 +220,35 @@ Private Function getTaskData() As String
     Set rst = Nothing
     Set db = Nothing
     
+End Function
+
+Private Function getViewMode() As String
+
+    'Declarations
+    Dim strText As String
+
+    Select Case Me.ViewMode
+        Case gcViewMode.vwHour
+            strText = "Hour"
+        Case gcViewMode.vwQuarterDay
+            strText = "Quarter Day"
+        Case gcViewMode.vwHalfDay
+            strText = "Half Day"
+        Case gcViewMode.vwDay
+            strText = "Day"
+        Case gcViewMode.vwWeek
+            strText = "Week"
+        Case gcViewMode.vwMonth
+            strText = "Month"
+        Case gcViewMode.vwYear
+            strText = "Year"
+        Case Else
+            strText = "Day"
+    End Select
+
+    strText = "'" & strText & "'"
+        
+    getViewMode = strText
+
 End Function
 
