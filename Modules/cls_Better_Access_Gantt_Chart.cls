@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.03.06  published: 01.04.2026                                                      #
+'# Version 1.04.05  published: 02.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -34,7 +34,8 @@ End Enum
 Private WithEvents m_Control As Edge
 Attribute m_Control.VB_VarHelpID = -1
 Private m_Language As String
-Private m_ViewMode
+Private m_ViewMode As gcViewMode
+Private m_ColumnWidth As Long
 
 
 '### Properties
@@ -60,12 +61,21 @@ Public Property Get ViewMode() As gcViewMode
     ViewMode = m_ViewMode
 End Property
 
+Public Property Let ColumnWidth(newValue As Long)
+    m_ColumnWidth = newValue
+End Property
+Public Property Get ColumnWidth() As Long
+    ColumnWidth = m_ColumnWidth
+End Property
+
+
 
 '### Instanzing
 
 Private Sub Class_Initialize()
 
     Me.Language = "en"
+    Me.ColumnWidth = 45
     
 End Sub
 
@@ -150,7 +160,8 @@ Private Function getScript() As String
     strText = strText & "        ];" & vbCrLf
     strText = strText & "        const gantt = new Gantt('#gantt', tasks, {" & vbCrLf
     strText = strText & "            view_mode: " & getViewMode & "," & vbCrLf
-    strText = strText & "            language: '" & Me.Language & "'" & vbCrLf
+    strText = strText & "            language: '" & Me.Language & "'," & vbCrLf
+    strText = strText & "            column_width: " & Me.ColumnWidth & vbCrLf
     strText = strText & "        });" & vbCrLf
     strText = strText & "    </script>" & vbCrLf
     
