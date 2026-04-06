@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.07.06  published: 05.04.2026                                                      #
+'# Version 1.08.05  published: 06.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -39,6 +39,7 @@ Private m_ColumnWidth As Long
 Private m_BarHeight As Long
 Private m_ShowTodayButton As Boolean
 Private m_ArrowCurveRadius As Integer
+Private m_TaskBarCurveRadius As Integer
 
 
 '### Properties
@@ -92,6 +93,13 @@ Public Property Get ArrowCurveRadius() As Integer
     ArrowCurveRadius = m_ArrowCurveRadius
 End Property
 
+Public Property Let TaskBarCurveRadius(newValue As Integer)
+    m_TaskBarCurveRadius = newValue
+End Property
+Public Property Get TaskBarCurveRadius() As Integer
+    TaskBarCurveRadius = m_TaskBarCurveRadius
+End Property
+
 
 
 '### Instanzing
@@ -103,6 +111,7 @@ Private Sub Class_Initialize()
     Me.BarHeight = 30
     Me.ShowTodayButton = True
     Me.ArrowCurveRadius = 5
+    Me.TaskBarCurveRadius = 3
     
 End Sub
 
@@ -193,7 +202,8 @@ Private Function getScript() As String
     If Me.ShowTodayButton = False Then
         strText = strText & "            today_button: false," & vbCrLf
     End If
-    strText = strText & "            arrow_curve: " & Me.ArrowCurveRadius & "" & vbCrLf
+    strText = strText & "            arrow_curve: " & Me.ArrowCurveRadius & "," & vbCrLf
+    strText = strText & "            bar_corner_radius: " & Me.TaskBarCurveRadius & "" & vbCrLf
     strText = strText & "        });" & vbCrLf
     strText = strText & "    </script>" & vbCrLf
     
