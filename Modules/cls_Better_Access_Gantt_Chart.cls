@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.09.05  published: 07.04.2026                                                      #
+'# Version 1.11.05  published: 09.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -41,6 +41,9 @@ Private m_ShowTodayButton As Boolean
 Private m_ArrowCurveRadius As Integer
 Private m_TaskBarCurveRadius As Integer
 Private m_ContainerHight As String
+Private m_UpperHeaderHight As Integer
+Private m_LowerHeaderHight As Integer
+
 
 
 '### Properties
@@ -108,6 +111,20 @@ Public Property Get ContainerHight() As String
     ContainerHight = m_ContainerHight
 End Property
 
+Public Property Let UpperHeaderHight(newValue As Integer)
+    m_UpperHeaderHight = newValue
+End Property
+Public Property Get UpperHeaderHight() As Integer
+    UpperHeaderHight = m_UpperHeaderHight
+End Property
+
+Public Property Let LowerHeaderHight(newValue As Integer)
+    m_LowerHeaderHight = newValue
+End Property
+Public Property Get LowerHeaderHight() As Integer
+    LowerHeaderHight = m_LowerHeaderHight
+End Property
+
 
 
 '### Instanzing
@@ -121,6 +138,8 @@ Private Sub Class_Initialize()
     Me.ArrowCurveRadius = 5
     Me.TaskBarCurveRadius = 3
     Me.ContainerHight = "auto"
+    Me.UpperHeaderHight = 45
+    Me.LowerHeaderHight = 30
     
 End Sub
 
@@ -215,7 +234,9 @@ Private Function getScript() As String
         strText = strText & "            container_height: " & Me.ContainerHight & "," & vbCrLf
     End If
     strText = strText & "            arrow_curve: " & Me.ArrowCurveRadius & "," & vbCrLf
-    strText = strText & "            bar_corner_radius: " & Me.TaskBarCurveRadius & "" & vbCrLf
+    strText = strText & "            bar_corner_radius: " & Me.TaskBarCurveRadius & "," & vbCrLf
+    strText = strText & "            upper_header_height: " & Me.UpperHeaderHight & "," & vbCrLf
+    strText = strText & "            lower_header_height: " & Me.LowerHeaderHight & "" & vbCrLf
     strText = strText & "        });" & vbCrLf
     strText = strText & "    </script>" & vbCrLf
     
