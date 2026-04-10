@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.11.05  published: 09.04.2026                                                      #
+'# Version 1.12.07  published: 10.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -219,10 +219,14 @@ Private Function getScript() As String
     strText = strText & "    <div id='gantt'></div>" & vbCrLf
     
     strText = strText & "    <script>" & vbCrLf
+    strText = strText & "        window.AccessEdgeBridge = null;" & vbCrLf
     strText = strText & "        const tasks = [" & vbCrLf
     strText = strText & getTaskData & vbCrLf
     strText = strText & "        ];" & vbCrLf
     strText = strText & "        const gantt = new Gantt('#gantt', tasks, {" & vbCrLf
+    strText = strText & "            on_click: function(task) {" & vbCrLf
+    strText = strText & "                window.AccessEdgeBridge = task.id;" & vbCrLf
+    strText = strText & "            }," & vbCrLf
     strText = strText & "            view_mode: " & getViewMode & "," & vbCrLf
     strText = strText & "            language: '" & Me.Language & "'," & vbCrLf
     strText = strText & "            column_width: " & Me.ColumnWidth & "," & vbCrLf

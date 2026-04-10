@@ -2,7 +2,7 @@ Attribute VB_Name = "mdl_Helpers"
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.11.05  published: 09.04.2026                                                      #
+'# Version 1.12.07  published: 10.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -154,7 +154,7 @@ Public Sub PrepareAndExportModules(Optional ByVal TagVersion As Boolean = True)
     CodeLine = "'# Version " & Version & "  published: " & Format$(Date, "dd.mm.yyyy") & "                                                      #"
     
     For Each vbc In Application.VBE.ActiveVBProject.VBComponents
-        If vbc.Type = 1 Or vbc.Type = 2 Then
+        If vbc.Type = 1 Or vbc.Type = 2 Or vbc.Type = 100 Then
             If TagVersion Then
                 Application.VBE.ActiveVBProject.VBComponents(vbc.Name).CodeModule.InsertLines 4, CodeLine
                 Application.VBE.ActiveVBProject.VBComponents(vbc.Name).CodeModule.DeleteLines 5, 1
