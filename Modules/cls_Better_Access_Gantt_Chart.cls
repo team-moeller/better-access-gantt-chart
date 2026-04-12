@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.13.03  published: 11.04.2026                                                      #
+'# Version 1.14.04  published: 12.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -161,6 +161,28 @@ Public Sub ShowGanttChart()
     Control.Navigate Datei
     
 End Sub
+
+Public Sub ResetBridgeVariable()
+
+    'Variables
+    Dim Script As String
+    
+    Script = "window.AccessEdgeBridge = null;"
+    Me.Control.ExecuteJavascript Script
+
+End Sub
+
+Public Function RetrieveBridgeVariable() As String
+
+    'Variables
+    Dim Value As String
+    
+    Value = Me.Control.RetrieveJavascriptValue("window.AccessEdgeBridge")
+
+    RetrieveBridgeVariable = Value
+
+End Function
+
 
 
 '### Private Methods

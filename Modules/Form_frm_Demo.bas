@@ -10,11 +10,15 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.13.03  published: 11.04.2026                                                      #
+'# Version 1.14.04  published: 12.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
 Option Explicit
+
+'Members
+Dim myGantt As cls_Better_Access_Gantt_Chart
+
 
 Private Sub Form_Load()
 
@@ -23,9 +27,6 @@ Private Sub Form_Load()
 End Sub
 
 Public Sub cmdCreateGanttChart_Click()
-    
-    'Variables
-    Dim myGantt As cls_Better_Access_Gantt_Chart
     
     'Make sure frm_Configuration is open
     If IsFormOpen("frm_Configuration") = False Then
@@ -57,22 +58,12 @@ Private Sub ctlEdgeBrowser_Click()
     'Variables
     Dim Value As String
     
-    Value = Me.ctlEdgeBrowser.RetrieveJavascriptValue("window.AccessEdgeBridge")
+    Value = myGantt.RetrieveBridgeVariable
     
     If Value <> "null" Then
         MsgBox Value
     End If
     
-    ResetBridgeVariable
-
-End Sub
-
-Private Sub ResetBridgeVariable()
-
-    'Variables
-    Dim Script As String
-    
-    Script = "window.AccessEdgeBridge = null;"
-    Me.ctlEdgeBrowser.ExecuteJavascript Script
+    myGantt.ResetBridgeVariable
 
 End Sub
