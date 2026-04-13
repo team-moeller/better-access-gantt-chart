@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.14.04  published: 12.04.2026                                                      #
+'# Version 1.15.08  published: 13.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database

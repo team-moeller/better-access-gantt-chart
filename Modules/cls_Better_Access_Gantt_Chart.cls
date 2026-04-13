@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.14.04  published: 12.04.2026                                                      #
+'# Version 1.15.08  published: 13.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -28,6 +28,8 @@ Public Enum gcViewMode
     vwMonth = 6
     vwYear = 7
 End Enum
+
+
 
 '### Members
 
@@ -127,7 +129,7 @@ End Property
 
 
 
-'### Instanzing
+'### Instantiation
 
 Private Sub Class_Initialize()
 
@@ -146,6 +148,7 @@ End Sub
 Private Sub Class_Terminate()
     ' Do Nothing
 End Sub
+
 
 
 '### Public Methods
@@ -242,39 +245,13 @@ Private Function getScript() As String
     
     strText = strText & "    <script>" & vbCrLf
     strText = strText & "        window.AccessEdgeBridge = null;" & vbCrLf
-    strText = strText & "        const tasks = [" & vbCrLf
-    strText = strText & getTaskData & vbCrLf
-    strText = strText & "        ];" & vbCrLf
+    strText = strText & getTaskData
     strText = strText & "        const gantt = new Gantt('#gantt', tasks, {" & vbCrLf
-    strText = strText & "            on_click: function(task) {" & vbCrLf
-    strText = strText & "                window.AccessEdgeBridge = task.id;" & vbCrLf
-    strText = strText & "            }," & vbCrLf
-    strText = strText & "            view_mode: " & getViewMode & "," & vbCrLf
-    strText = strText & "            language: '" & Me.Language & "'," & vbCrLf
-    strText = strText & "            column_width: " & Me.ColumnWidth & "," & vbCrLf
-    strText = strText & "            bar_height: " & Me.BarHeight & "," & vbCrLf
-    If Me.ShowTodayButton = False Then
-        strText = strText & "            today_button: false," & vbCrLf
-    End If
-    If Me.ContainerHight <> "auto" Then
-        strText = strText & "            container_height: " & Me.ContainerHight & "," & vbCrLf
-    End If
-    strText = strText & "            arrow_curve: " & Me.ArrowCurveRadius & "," & vbCrLf
-    strText = strText & "            bar_corner_radius: " & Me.TaskBarCurveRadius & "," & vbCrLf
-    strText = strText & "            upper_header_height: " & Me.UpperHeaderHight & "," & vbCrLf
-    strText = strText & "            lower_header_height: " & Me.LowerHeaderHight & "" & vbCrLf
+    strText = strText & getInteraction
+    strText = strText & getOptions
     strText = strText & "        });" & vbCrLf
     strText = strText & "    </script>" & vbCrLf
-    
-    strText = strText & "    <style>" & vbCrLf
-    strText = strText & "        /* Custom colors */" & vbCrLf
-    strText = strText & "        .bar-red .bar {" & vbCrLf
-    strText = strText & "            fill: #e74c3c !important;" & vbCrLf
-    strText = strText & "        }" & vbCrLf
-    strText = strText & "        .bar-green .bar {" & vbCrLf
-    strText = strText & "            fill: #2ecc71 !important;" & vbCrLf
-    strText = strText & "        }" & vbCrLf
-    strText = strText & "    </style>" & vbCrLf
+    strText = strText & getCustomColors
     
     getScript = strText
 
@@ -304,6 +281,8 @@ Private Function getTaskData() As String
     strSQL = "Select * from tbl_DemoData"
     Set rst = db.OpenRecordset(strSQL, dbOpenSnapshot)
     
+    strText = strText & "        const tasks = [" & vbCrLf
+    
     Do While Not rst.EOF
         strText = strText & "            {"
         strText = strText & "id: '" & rst!TID & "', "
@@ -325,13 +304,71 @@ Private Function getTaskData() As String
         rst.MoveNext
     Loop
     
-    strText = Left$(strText, Len(strText) - 3)
+    strText = Left$(strText, Len(strText) - 3) & vbCrLf
+    strText = strText & "        ];" & vbCrLf
+    
     getTaskData = strText
     
     rst.Close
     Set rst = Nothing
     Set db = Nothing
     
+End Function
+
+Private Function getInteraction() As String
+
+    'Variables
+    Dim strText As String
+    
+    strText = strText & "            on_click: function(task) {" & vbCrLf
+    strText = strText & "                window.AccessEdgeBridge = task.id;" & vbCrLf
+    strText = strText & "            }," & vbCrLf
+
+    getInteraction = strText
+
+End Function
+
+Private Function getOptions() As String
+
+    'Variables
+    Dim strText As String
+
+    strText = strText & "            view_mode: " & getViewMode & "," & vbCrLf
+    strText = strText & "            language: '" & Me.Language & "'," & vbCrLf
+    strText = strText & "            column_width: " & Me.ColumnWidth & "," & vbCrLf
+    strText = strText & "            bar_height: " & Me.BarHeight & "," & vbCrLf
+    If Me.ShowTodayButton = False Then
+        strText = strText & "            today_button: false," & vbCrLf
+    End If
+    If Me.ContainerHight <> "auto" Then
+        strText = strText & "            container_height: " & Me.ContainerHight & "," & vbCrLf
+    End If
+    strText = strText & "            arrow_curve: " & Me.ArrowCurveRadius & "," & vbCrLf
+    strText = strText & "            bar_corner_radius: " & Me.TaskBarCurveRadius & "," & vbCrLf
+    strText = strText & "            upper_header_height: " & Me.UpperHeaderHight & "," & vbCrLf
+    strText = strText & "            lower_header_height: " & Me.LowerHeaderHight & "" & vbCrLf
+
+    getOptions = strText
+
+End Function
+
+Private Function getCustomColors() As String
+
+    'Variables
+    Dim strText As String
+
+    strText = strText & "    <style>" & vbCrLf
+    strText = strText & "        /* Custom colors */" & vbCrLf
+    strText = strText & "        .bar-red .bar {" & vbCrLf
+    strText = strText & "            fill: #e74c3c !important;" & vbCrLf
+    strText = strText & "        }" & vbCrLf
+    strText = strText & "        .bar-green .bar {" & vbCrLf
+    strText = strText & "            fill: #2ecc71 !important;" & vbCrLf
+    strText = strText & "        }" & vbCrLf
+    strText = strText & "    </style>" & vbCrLf
+
+    getCustomColors = strText
+
 End Function
 
 Private Function getViewMode() As String
