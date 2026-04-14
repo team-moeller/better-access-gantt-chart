@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.15.08  published: 13.04.2026                                                      #
+'# Version 1.16.24  published: 14.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -18,6 +18,11 @@ Option Explicit
 
 
 '### Enums
+
+Public Enum gcScriptSource
+    CDN = 1
+    LocalFile = 2
+End Enum
 
 Public Enum gcViewMode
     vwHour = 1
@@ -45,6 +50,12 @@ Private m_TaskBarCurveRadius As Integer
 Private m_ContainerHight As String
 Private m_UpperHeaderHight As Integer
 Private m_LowerHeaderHight As Integer
+Private m_GanttJsSource As gcScriptSource
+Private m_GanttCssSource As gcScriptSource
+Private m_GanttJsCDN As String
+Private m_GanttCssCDN As String
+Private m_GanttJsPathFilename As String
+Private m_GanttCssPathFilename As String
 
 
 
@@ -127,12 +138,61 @@ Public Property Get LowerHeaderHight() As Integer
     LowerHeaderHight = m_LowerHeaderHight
 End Property
 
+Public Property Let GanttJsSource(ByVal newValue As gcScriptSource)
+    m_GanttJsSource = newValue
+End Property
+Public Property Get GanttJsSource() As gcScriptSource
+    GanttJsSource = m_GanttJsSource
+End Property
+
+Public Property Let GanttCssSource(ByVal newValue As gcScriptSource)
+    m_GanttCssSource = newValue
+End Property
+Public Property Get GanttCssSource() As gcScriptSource
+    GanttCssSource = m_GanttCssSource
+End Property
+
+Public Property Let GanttJsCDN(ByVal newValue As String)
+    m_GanttJsCDN = newValue
+End Property
+Public Property Get GanttJsCDN() As String
+    GanttJsCDN = m_GanttJsCDN
+End Property
+
+Public Property Let GanttCssCDN(ByVal newValue As String)
+    m_GanttCssCDN = newValue
+End Property
+Public Property Get GanttCssCDN() As String
+    GanttCssCDN = m_GanttCssCDN
+End Property
+
+Public Property Let GanttJsPathFilename(ByVal newValue As String)
+    m_GanttJsPathFilename = newValue
+End Property
+Public Property Get GanttJsPathFilename() As String
+    GanttJsPathFilename = m_GanttJsPathFilename
+End Property
+
+Public Property Let GanttCssPathFilename(ByVal newValue As String)
+    m_GanttCssPathFilename = newValue
+End Property
+Public Property Get GanttCssPathFilename() As String
+    GanttCssPathFilename = m_GanttCssPathFilename
+End Property
+
 
 
 '### Instantiation
 
 Private Sub Class_Initialize()
 
+    Me.GanttJsSource = gcScriptSource.CDN
+    Me.GanttJsCDN = "https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.umd.js"
+    Me.GanttJsPathFilename = CurrentProject.Path & "\frappe-gantt.umd.js"
+    Me.GanttCssSource = gcScriptSource.CDN
+    Me.GanttCssCDN = "https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.css"
+    Me.GanttCssPathFilename = CurrentProject.Path & "\frappe-gantt.css"
+    
     Me.Language = "en"
     Me.ColumnWidth = 45
     Me.BarHeight = 30
@@ -226,8 +286,8 @@ Private Function getHead() As String
     strText = strText & "    <meta http-equiv='X-UA-Compatible' content='IE=Edge'/>" & vbCrLf
     strText = strText & "    <title>Better Access Gantt Chart</title>" & vbCrLf
     strText = strText & "    <style>body{margin:0;padding:0;}</style>" & vbCrLf
-    strText = strText & "    <script src='https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.umd.js'></script>" & vbCrLf
-    strText = strText & "    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.css'/>" & vbCrLf
+    strText = strText & "    <script src=" & getLocationJs & "></script>" & vbCrLf
+    strText = strText & "    <link rel='stylesheet' href=" & getLocationCss & "/>" & vbCrLf
     strText = strText & "</head>" & vbCrLf
     strText = strText & "<body>" & vbCrLf
     
@@ -368,6 +428,42 @@ Private Function getCustomColors() As String
     strText = strText & "    </style>" & vbCrLf
 
     getCustomColors = strText
+
+End Function
+
+Private Function getLocationJs() As String
+
+    'Declarations
+    Dim strText As String
+    
+    Select Case Me.GanttJsSource
+        Case gcScriptSource.CDN
+            strText = "'" & Me.GanttJsCDN & "'"
+        Case gcScriptSource.LocalFile
+            strText = "'" & "https://msaccess/" & Replace(Me.GanttJsPathFilename, "\", "/") & "'"
+        Case Else
+            'Do nothing
+    End Select
+            
+    getLocationJs = strText
+
+End Function
+
+Private Function getLocationCss() As String
+
+    'Declarations
+    Dim strText As String
+    
+    Select Case Me.GanttCssSource
+        Case gcScriptSource.CDN
+            strText = "'" & Me.GanttCssCDN & "'"
+        Case gcScriptSource.LocalFile
+            strText = "'" & "https://msaccess/" & Replace(Me.GanttCssPathFilename, "\", "/") & "'"
+        Case Else
+            'Do nothing
+    End Select
+            
+    getLocationCss = strText
 
 End Function
 

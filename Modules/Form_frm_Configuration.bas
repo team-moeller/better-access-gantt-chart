@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.15.08  published: 13.04.2026                                                      #
+'# Version 1.16.24  published: 14.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -28,3 +28,24 @@ Private Sub cmdUpdatePivotTable_Click()
     Forms!frm_Demo.cmdCreateGanttChart_Click
 
 End Sub
+
+Private Sub cmdSaveFrappeJs_Click()
+    
+    If SaveFileToDisk("frappe-gantt.umd.js", CurrentProject.Path) = True Then
+        MsgBox "frappe-gantt.umd.js successfully saved to hdd.", vbInformation, "Better Access Gantt Chart"
+    Else
+        MsgBox "Something went wrong!", vbExclamation, "Better Access Gantt Chart"
+    End If
+
+End Sub
+
+Private Sub cmdSaveFrappeCss_Click()
+    
+    If SaveFileToDisk("frappe-gantt.css", CurrentProject.Path) = True Then
+        MsgBox "frappe-gantt.css successfully saved to hdd.", vbInformation, "Better Access Gantt Chart"
+    Else
+        MsgBox "Something went wrong!", vbExclamation, "Better Access Gantt Chart"
+    End If
+
+End Sub
+

@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.15.08  published: 13.04.2026                                                      #
+'# Version 1.16.24  published: 14.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -38,16 +38,23 @@ Public Sub cmdCreateGanttChart_Click()
     
     Set myGantt.Control = Me.ctlEdgeBrowser
     'Chart
-    myGantt.Language = Nz(Forms!frm_Configuration.cboLanguage, "en")
-    myGantt.ViewMode = Nz(Forms!frm_Configuration.cboViewMode, 4)
-    myGantt.ColumnWidth = Nz(Forms!frm_Configuration.txtColumnWidth, 45)
-    myGantt.BarHeight = Nz(Forms!frm_Configuration.txtBarHeight, 30)
-    myGantt.ShowTodayButton = Nz(Forms!frm_Configuration.chkShowTodayButton, True)
-    myGantt.ArrowCurveRadius = Nz(Forms!frm_Configuration.txtArrowCurveRadius, 5)
-    myGantt.TaskBarCurveRadius = Nz(Forms!frm_Configuration.txtTaskBarCurveRadius, 3)
-    myGantt.ContainerHight = Nz(Forms!frm_Configuration.txtContainerHight, "auto")
-    myGantt.UpperHeaderHight = Nz(Forms!frm_Configuration.txtUpperHeaderHight, 45)
-    myGantt.LowerHeaderHight = Nz(Forms!frm_Configuration.txtLowerHeaderHight, 30)
+    myGantt.Language = Nz(Forms!frm_configuration.cboLanguage, "en")
+    myGantt.ViewMode = Nz(Forms!frm_configuration.cboViewMode, 4)
+    myGantt.ColumnWidth = Nz(Forms!frm_configuration.txtColumnWidth, 45)
+    myGantt.BarHeight = Nz(Forms!frm_configuration.txtBarHeight, 30)
+    myGantt.ShowTodayButton = Nz(Forms!frm_configuration.chkShowTodayButton, True)
+    myGantt.ArrowCurveRadius = Nz(Forms!frm_configuration.txtArrowCurveRadius, 5)
+    myGantt.TaskBarCurveRadius = Nz(Forms!frm_configuration.txtTaskBarCurveRadius, 3)
+    myGantt.ContainerHight = Nz(Forms!frm_configuration.txtContainerHight, "auto")
+    myGantt.UpperHeaderHight = Nz(Forms!frm_configuration.txtUpperHeaderHight, 45)
+    myGantt.LowerHeaderHight = Nz(Forms!frm_configuration.txtLowerHeaderHight, 30)
+    'Scripts
+    myGantt.GanttJsSource = Forms!frm_configuration.cboFrappeJsSource
+    myGantt.GanttJsCDN = Forms!frm_configuration.txtFrappeJsCDN
+    myGantt.GanttJsPathFilename = Forms!frm_configuration.txtFrappeJsPathFilename
+    myGantt.GanttCssSource = Forms!frm_configuration.cboFrappeCssSource
+    myGantt.GanttCssCDN = Forms!frm_configuration.txtFrappeCssCDN
+    myGantt.GanttCssPathFilename = Forms!frm_configuration.txtFrappeCssPathFilename
     
     myGantt.ShowGanttChart
 

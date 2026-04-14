@@ -2,7 +2,7 @@ Attribute VB_Name = "mdl_Helpers"
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.15.08  published: 13.04.2026                                                      #
+'# Version 1.16.24  published: 14.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -19,7 +19,8 @@ Public Function File2OLE(ByVal Table As String, ByVal PrimaryKeyFieldName As Str
                          ByVal FileName As String, Optional ByVal InCurrentProjectPath As Boolean) As Long
 
 'Prerequisit: Record with ID must already exist
-'Call: File2OLE("USys_FileData","ID","FileData","1","JsBarcode.all.min.js",True)
+'Call File2OLE("USys_FileData","ID","FileData","1","frappe-gantt.umd.js",True)
+'Call File2OLE("USys_FileData","ID","FileData","2","frappe-gantt.css",True)
 
     On Error GoTo Handle_Error
 
