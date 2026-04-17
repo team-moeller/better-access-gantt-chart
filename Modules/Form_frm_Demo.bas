@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.16.24  published: 14.04.2026                                                      #
+'# Version 1.18.11  published: 17.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -37,17 +37,19 @@ Public Sub cmdCreateGanttChart_Click()
     Set myGantt = New cls_Better_Access_Gantt_Chart
     
     Set myGantt.Control = Me.ctlEdgeBrowser
-    'Chart
+    'Appearance
     myGantt.Language = Nz(Forms!frm_configuration.cboLanguage, "en")
     myGantt.ViewMode = Nz(Forms!frm_configuration.cboViewMode, 4)
     myGantt.ColumnWidth = Nz(Forms!frm_configuration.txtColumnWidth, 45)
     myGantt.BarHeight = Nz(Forms!frm_configuration.txtBarHeight, 30)
-    myGantt.ShowTodayButton = Nz(Forms!frm_configuration.chkShowTodayButton, True)
     myGantt.ArrowCurveRadius = Nz(Forms!frm_configuration.txtArrowCurveRadius, 5)
     myGantt.TaskBarCurveRadius = Nz(Forms!frm_configuration.txtTaskBarCurveRadius, 3)
     myGantt.ContainerHight = Nz(Forms!frm_configuration.txtContainerHight, "auto")
     myGantt.UpperHeaderHight = Nz(Forms!frm_configuration.txtUpperHeaderHight, 45)
     myGantt.LowerHeaderHight = Nz(Forms!frm_configuration.txtLowerHeaderHight, 30)
+    'Interaction
+    myGantt.ShowTodayButton = Nz(Forms!frm_configuration.chkShowTodayButton, True)
+    myGantt.ViewModeSelect = Nz(Forms!frm_configuration.chkViewModeSelect, False)
     'Scripts
     myGantt.GanttJsSource = Forms!frm_configuration.cboFrappeJsSource
     myGantt.GanttJsCDN = Forms!frm_configuration.txtFrappeJsCDN

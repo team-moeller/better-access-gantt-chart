@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.16.24  published: 14.04.2026                                                      #
+'# Version 1.18.11  published: 17.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -56,6 +56,7 @@ Private m_GanttJsCDN As String
 Private m_GanttCssCDN As String
 Private m_GanttJsPathFilename As String
 Private m_GanttCssPathFilename As String
+Private m_ViewModeSelect As Boolean
 
 
 
@@ -180,6 +181,13 @@ Public Property Get GanttCssPathFilename() As String
     GanttCssPathFilename = m_GanttCssPathFilename
 End Property
 
+Public Property Let ViewModeSelect(ByVal newValue As Boolean)
+    m_ViewModeSelect = newValue
+End Property
+Public Property Get ViewModeSelect() As Boolean
+    ViewModeSelect = m_ViewModeSelect
+End Property
+
 
 
 '### Instantiation
@@ -202,6 +210,7 @@ Private Sub Class_Initialize()
     Me.ContainerHight = "auto"
     Me.UpperHeaderHight = 45
     Me.LowerHeaderHight = 30
+    Me.ViewModeSelect = False
     
 End Sub
 
@@ -307,7 +316,7 @@ Private Function getScript() As String
     strText = strText & "        window.AccessEdgeBridge = null;" & vbCrLf
     strText = strText & getTaskData
     strText = strText & "        const gantt = new Gantt('#gantt', tasks, {" & vbCrLf
-    strText = strText & getInteraction
+    strText = strText & getInteractivity
     strText = strText & getOptions
     strText = strText & "        });" & vbCrLf
     strText = strText & "    </script>" & vbCrLf
@@ -375,7 +384,7 @@ Private Function getTaskData() As String
     
 End Function
 
-Private Function getInteraction() As String
+Private Function getInteractivity() As String
 
     'Variables
     Dim strText As String
@@ -384,7 +393,7 @@ Private Function getInteraction() As String
     strText = strText & "                window.AccessEdgeBridge = task.id;" & vbCrLf
     strText = strText & "            }," & vbCrLf
 
-    getInteraction = strText
+    getInteractivity = strText
 
 End Function
 
@@ -406,7 +415,10 @@ Private Function getOptions() As String
     strText = strText & "            arrow_curve: " & Me.ArrowCurveRadius & "," & vbCrLf
     strText = strText & "            bar_corner_radius: " & Me.TaskBarCurveRadius & "," & vbCrLf
     strText = strText & "            upper_header_height: " & Me.UpperHeaderHight & "," & vbCrLf
-    strText = strText & "            lower_header_height: " & Me.LowerHeaderHight & "" & vbCrLf
+    strText = strText & "            lower_header_height: " & Me.LowerHeaderHight & "," & vbCrLf
+    If Me.ViewModeSelect = True Then
+        strText = strText & "            view_mode_select: true" & "" & vbCrLf
+    End If
 
     getOptions = strText
 

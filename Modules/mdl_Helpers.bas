@@ -2,7 +2,7 @@ Attribute VB_Name = "mdl_Helpers"
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.16.24  published: 14.04.2026                                                      #
+'# Version 1.18.11  published: 17.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -166,7 +166,7 @@ Public Sub PrepareAndExportModules(Optional ByVal TagVersion As Boolean = True)
     Next
     Application.DoCmd.RunCommand (acCmdCompileAndSaveAllModules)
     
-    MsgBox "Export done", vbInformation, "Better Access PivotTable"
+    MsgBox "Export done", vbInformation, "Better Access Gantt Chart"
 
 End Sub
 
@@ -196,7 +196,7 @@ Public Sub ImportModules()
     Loop
     Application.DoCmd.RunCommand (acCmdCompileAndSaveAllModules)
     
-    MsgBox "Import done", vbInformation, "Better Access PivotTable"
+    MsgBox "Import done", vbInformation, "Better Access Gantt Chart"
 
 End Sub
 
