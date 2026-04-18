@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.18.11  published: 17.04.2026                                                      #
+'# Version 1.19.06  published: 18.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -57,6 +57,7 @@ Private m_GanttCssCDN As String
 Private m_GanttJsPathFilename As String
 Private m_GanttCssPathFilename As String
 Private m_ViewModeSelect As Boolean
+Private m_Padding As Integer
 
 
 
@@ -188,6 +189,13 @@ Public Property Get ViewModeSelect() As Boolean
     ViewModeSelect = m_ViewModeSelect
 End Property
 
+Public Property Let Padding(newValue As Integer)
+    m_Padding = newValue
+End Property
+Public Property Get Padding() As Integer
+    Padding = m_Padding
+End Property
+
 
 
 '### Instantiation
@@ -211,6 +219,7 @@ Private Sub Class_Initialize()
     Me.UpperHeaderHight = 45
     Me.LowerHeaderHight = 30
     Me.ViewModeSelect = False
+    Me.Padding = 18
     
 End Sub
 
@@ -417,8 +426,9 @@ Private Function getOptions() As String
     strText = strText & "            upper_header_height: " & Me.UpperHeaderHight & "," & vbCrLf
     strText = strText & "            lower_header_height: " & Me.LowerHeaderHight & "," & vbCrLf
     If Me.ViewModeSelect = True Then
-        strText = strText & "            view_mode_select: true" & "" & vbCrLf
+        strText = strText & "            view_mode_select: true" & "," & vbCrLf
     End If
+    strText = strText & "            padding: " & Me.Padding & "" & vbCrLf
 
     getOptions = strText
 
@@ -431,12 +441,8 @@ Private Function getCustomColors() As String
 
     strText = strText & "    <style>" & vbCrLf
     strText = strText & "        /* Custom colors */" & vbCrLf
-    strText = strText & "        .bar-red .bar {" & vbCrLf
-    strText = strText & "            fill: #e74c3c !important;" & vbCrLf
-    strText = strText & "        }" & vbCrLf
-    strText = strText & "        .bar-green .bar {" & vbCrLf
-    strText = strText & "            fill: #2ecc71 !important;" & vbCrLf
-    strText = strText & "        }" & vbCrLf
+    strText = strText & "        .bar-red .bar {fill: #e74c3c !important;}" & vbCrLf
+    strText = strText & "        .bar-green .bar {fill: #2ecc71 !important;}" & vbCrLf
     strText = strText & "    </style>" & vbCrLf
 
     getCustomColors = strText
