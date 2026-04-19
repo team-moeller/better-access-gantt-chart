@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.19.06  published: 18.04.2026                                                      #
+'# Version 1.20.07  published: 19.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -32,6 +32,13 @@ Public Enum gcViewMode
     vwWeek = 5
     vwMonth = 6
     vwYear = 7
+End Enum
+
+Public Enum gcLines
+    lnNone = 1
+    lnVertical = 2
+    lnHorizontal = 3
+    lnBoth = 4
 End Enum
 
 
@@ -58,6 +65,7 @@ Private m_GanttJsPathFilename As String
 Private m_GanttCssPathFilename As String
 Private m_ViewModeSelect As Boolean
 Private m_Padding As Integer
+Private m_Lines As gcLines
 
 
 
@@ -196,6 +204,13 @@ Public Property Get Padding() As Integer
     Padding = m_Padding
 End Property
 
+Public Property Let Lines(newValue As gcLines)
+    m_Lines = newValue
+End Property
+Public Property Get Lines() As gcLines
+    Lines = m_Lines
+End Property
+
 
 
 '### Instantiation
@@ -220,6 +235,7 @@ Private Sub Class_Initialize()
     Me.LowerHeaderHight = 30
     Me.ViewModeSelect = False
     Me.Padding = 18
+    Me.Lines = gcLines.lnBoth
     
 End Sub
 
@@ -428,7 +444,8 @@ Private Function getOptions() As String
     If Me.ViewModeSelect = True Then
         strText = strText & "            view_mode_select: true" & "," & vbCrLf
     End If
-    strText = strText & "            padding: " & Me.Padding & "" & vbCrLf
+    strText = strText & "            padding: " & Me.Padding & "," & vbCrLf
+    strText = strText & "            lines: " & getLines & "" & vbCrLf
 
     getOptions = strText
 
@@ -512,6 +529,30 @@ Private Function getViewMode() As String
     strText = "'" & strText & "'"
         
     getViewMode = strText
+
+End Function
+
+Private Function getLines() As String
+
+    'Declarations
+    Dim strText As String
+
+    Select Case Me.Lines
+        Case gcLines.lnNone
+            strText = "none"
+        Case gcLines.lnVertical
+            strText = "vertical"
+        Case gcLines.lnHorizontal
+            strText = "horizontal"
+        Case gcLines.lnBoth
+            strText = "both"
+        Case Else
+            strText = "both"
+    End Select
+
+    strText = "'" & strText & "'"
+        
+    getLines = strText
 
 End Function
 
