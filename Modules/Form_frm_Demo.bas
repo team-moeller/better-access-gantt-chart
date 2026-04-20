@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.20.07  published: 19.04.2026                                                      #
+'# Version 1.21.13  published: 20.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -52,6 +52,9 @@ Public Sub cmdCreateGanttChart_Click()
     'Interaction
     myGantt.ShowTodayButton = Nz(Forms!frm_configuration.chkShowTodayButton, True)
     myGantt.ViewModeSelect = Nz(Forms!frm_configuration.chkViewModeSelect, False)
+    myGantt.ReadonlyProgress = Nz(Forms!frm_configuration.chkReadOnlyProgress, False)
+    myGantt.ReadonlyDates = Nz(Forms!frm_configuration.chkReadOnlyDates, False)
+    myGantt.ReadonlyChart = Nz(Forms!frm_configuration.chkReadOnlyWholeChart, False)
     'Scripts
     myGantt.GanttJsSource = Forms!frm_configuration.cboFrappeJsSource
     myGantt.GanttJsCDN = Forms!frm_configuration.txtFrappeJsCDN

@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.20.07  published: 19.04.2026                                                      #
+'# Version 1.21.13  published: 20.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -66,6 +66,9 @@ Private m_GanttCssPathFilename As String
 Private m_ViewModeSelect As Boolean
 Private m_Padding As Integer
 Private m_Lines As gcLines
+Private m_ReadonlyProgress As Boolean
+Private m_ReadonlyDates As Boolean
+Private m_ReadonlyChart As Boolean
 
 
 
@@ -211,6 +214,27 @@ Public Property Get Lines() As gcLines
     Lines = m_Lines
 End Property
 
+Public Property Let ReadonlyProgress(newValue As Boolean)
+    m_ReadonlyProgress = newValue
+End Property
+Public Property Get ReadonlyProgress() As Boolean
+    ReadonlyProgress = m_ReadonlyProgress
+End Property
+
+Public Property Let ReadonlyDates(newValue As Boolean)
+    m_ReadonlyDates = newValue
+End Property
+Public Property Get ReadonlyDates() As Boolean
+    ReadonlyDates = m_ReadonlyDates
+End Property
+
+Public Property Let ReadonlyChart(newValue As Boolean)
+    m_ReadonlyChart = newValue
+End Property
+Public Property Get ReadonlyChart() As Boolean
+    ReadonlyChart = m_ReadonlyChart
+End Property
+
 
 
 '### Instantiation
@@ -236,6 +260,9 @@ Private Sub Class_Initialize()
     Me.ViewModeSelect = False
     Me.Padding = 18
     Me.Lines = gcLines.lnBoth
+    Me.ReadonlyProgress = False
+    Me.ReadonlyDates = False
+    Me.ReadonlyChart = False
     
 End Sub
 
@@ -445,6 +472,15 @@ Private Function getOptions() As String
         strText = strText & "            view_mode_select: true" & "," & vbCrLf
     End If
     strText = strText & "            padding: " & Me.Padding & "," & vbCrLf
+    If Me.ReadonlyProgress = True Then
+        strText = strText & "            readonly_progress: true" & "," & vbCrLf
+    End If
+    If Me.ReadonlyDates = True Then
+        strText = strText & "            readonly_dates: true" & "," & vbCrLf
+    End If
+    If Me.ReadonlyChart = True Then
+        strText = strText & "            readonly: true" & "," & vbCrLf
+    End If
     strText = strText & "            lines: " & getLines & "" & vbCrLf
 
     getOptions = strText
