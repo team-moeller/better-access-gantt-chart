@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.21.13  published: 20.04.2026                                                      #
+'# Version 1.22.04  published: 21.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -69,6 +69,7 @@ Private m_Lines As gcLines
 Private m_ReadonlyProgress As Boolean
 Private m_ReadonlyDates As Boolean
 Private m_ReadonlyChart As Boolean
+Private m_AutoMoveLabel As Boolean
 
 
 
@@ -235,6 +236,13 @@ Public Property Get ReadonlyChart() As Boolean
     ReadonlyChart = m_ReadonlyChart
 End Property
 
+Public Property Let AutoMoveLabel(newValue As Boolean)
+    m_AutoMoveLabel = newValue
+End Property
+Public Property Get AutoMoveLabel() As Boolean
+    AutoMoveLabel = m_AutoMoveLabel
+End Property
+
 
 
 '### Instantiation
@@ -263,6 +271,7 @@ Private Sub Class_Initialize()
     Me.ReadonlyProgress = False
     Me.ReadonlyDates = False
     Me.ReadonlyChart = False
+    Me.AutoMoveLabel = False
     
 End Sub
 
@@ -480,6 +489,9 @@ Private Function getOptions() As String
     End If
     If Me.ReadonlyChart = True Then
         strText = strText & "            readonly: true" & "," & vbCrLf
+    End If
+    If Me.AutoMoveLabel = True Then
+        strText = strText & "            auto_move_label: true" & "," & vbCrLf
     End If
     strText = strText & "            lines: " & getLines & "" & vbCrLf
 
