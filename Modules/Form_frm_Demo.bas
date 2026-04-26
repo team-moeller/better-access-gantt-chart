@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.23.05  published: 24.04.2026                                                      #
+'# Version 1.24.12  published: 26.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -49,6 +49,8 @@ Public Sub cmdCreateGanttChart_Click()
     myGantt.LowerHeaderHight = Nz(Forms!frm_configuration.txtLowerHeaderHight, 30)
     myGantt.Padding = Nz(Forms!frm_configuration.txtPadding, 18)
     myGantt.Lines = Nz(Forms!frm_configuration.cboLines, gcLines.lnBoth)
+    myGantt.ScrollTo = Nz(Forms!frm_configuration.cboScrollTo, gcScrollTo.stToday)
+    myGantt.ScrollToDate = Nz(Forms!frm_configuration.txtScrollToDate, Date)
     'Interaction
     myGantt.ShowTodayButton = Nz(Forms!frm_configuration.chkShowTodayButton, True)
     myGantt.ViewModeSelect = Nz(Forms!frm_configuration.chkViewModeSelect, False)

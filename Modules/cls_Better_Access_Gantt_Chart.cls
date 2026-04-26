@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.23.05  published: 24.04.2026                                                      #
+'# Version 1.24.12  published: 26.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -39,6 +39,13 @@ Public Enum gcLines
     lnVertical = 2
     lnHorizontal = 3
     lnBoth = 4
+End Enum
+
+Public Enum gcScrollTo
+    stToday = 1
+    stStart = 2
+    stEnd = 3
+    stDate = 4
 End Enum
 
 
@@ -71,6 +78,8 @@ Private m_ReadonlyDates As Boolean
 Private m_ReadonlyChart As Boolean
 Private m_AutoMoveLabel As Boolean
 Private m_MoveDependencies As Boolean
+Private m_ScrollTo As gcScrollTo
+Private m_ScrollToDate As Date
 
 
 
@@ -251,6 +260,20 @@ Public Property Get MoveDependencies() As Boolean
     MoveDependencies = m_MoveDependencies
 End Property
 
+Public Property Let ScrollTo(newValue As gcScrollTo)
+    m_ScrollTo = newValue
+End Property
+Public Property Get ScrollTo() As gcScrollTo
+    ScrollTo = m_ScrollTo
+End Property
+
+Public Property Let ScrollToDate(newValue As Date)
+    m_ScrollToDate = newValue
+End Property
+Public Property Get ScrollToDate() As Date
+    ScrollToDate = m_ScrollToDate
+End Property
+
 
 
 '### Instantiation
@@ -281,6 +304,8 @@ Private Sub Class_Initialize()
     Me.ReadonlyChart = False
     Me.AutoMoveLabel = False
     Me.MoveDependencies = True
+    Me.ScrollTo = gcScrollTo.stToday
+    Me.ScrollToDate = Format$(Date, "YYYY-MM-DD")
     
 End Sub
 
@@ -486,6 +511,7 @@ Private Function getOptions() As String
     strText = strText & "            bar_corner_radius: " & Me.TaskBarCurveRadius & "," & vbCrLf
     strText = strText & "            upper_header_height: " & Me.UpperHeaderHight & "," & vbCrLf
     strText = strText & "            lower_header_height: " & Me.LowerHeaderHight & "," & vbCrLf
+    strText = strText & "            scroll_to: " & getScrollTo & "," & vbCrLf
     If Me.ViewModeSelect = True Then
         strText = strText & "            view_mode_select: true" & "," & vbCrLf
     End If
@@ -613,6 +639,30 @@ Private Function getLines() As String
     strText = "'" & strText & "'"
         
     getLines = strText
+
+End Function
+
+Private Function getScrollTo() As String
+
+    'Declarations
+    Dim strText As String
+
+    Select Case Me.ScrollTo
+        Case gcScrollTo.stToday
+            strText = "today"
+        Case gcScrollTo.stStart
+            strText = "start"
+        Case gcScrollTo.stEnd
+            strText = "end"
+        Case gcScrollTo.stDate
+            strText = Format$(Me.ScrollToDate, "YYYY-MM-DD")
+        Case Else
+            strText = "today"
+    End Select
+
+    strText = "'" & strText & "'"
+        
+    getScrollTo = strText
 
 End Function
 

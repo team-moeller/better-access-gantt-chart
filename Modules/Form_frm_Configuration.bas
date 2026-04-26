@@ -10,13 +10,13 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.23.05  published: 24.04.2026                                                      #
+'# Version 1.24.12  published: 26.04.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
 Option Explicit
 
-Private Sub cmdUpdatePivotTable_Click()
+Private Sub cmdUpdateGanttChart_Click()
     
     'Make sure frm_Demo is open
     If IsFormOpen("frm_Demo") = False Then
@@ -26,6 +26,19 @@ Private Sub cmdUpdatePivotTable_Click()
     Forms!frm_Demo.SetFocus
     DoEvents
     Forms!frm_Demo.cmdCreateGanttChart_Click
+
+End Sub
+
+Private Sub cboScrollTo_AfterUpdate()
+
+    Select Case Me.cboScrollTo
+        Case 1, 2, 3
+            Me.txtScrollToDate.Enabled = False
+        Case 4
+            Me.txtScrollToDate.Enabled = True
+        Case Else
+            Me.txtScrollToDate.Enabled = False
+    End Select
 
 End Sub
 
