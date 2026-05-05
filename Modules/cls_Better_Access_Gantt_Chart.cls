@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.24.12  published: 26.04.2026                                                      #
+'# Version 1.25.05  published: 05.05.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -54,32 +54,35 @@ End Enum
 
 Private WithEvents m_Control As Edge
 Attribute m_Control.VB_VarHelpID = -1
+'Appearance
 Private m_Language As String
 Private m_ViewMode As gcViewMode
 Private m_ColumnWidth As Long
 Private m_BarHeight As Long
-Private m_ShowTodayButton As Boolean
 Private m_ArrowCurveRadius As Integer
 Private m_TaskBarCurveRadius As Integer
 Private m_ContainerHight As String
 Private m_UpperHeaderHight As Integer
 Private m_LowerHeaderHight As Integer
+Private m_Padding As Integer
+Private m_Lines As gcLines
+Private m_ScrollTo As gcScrollTo
+Private m_ScrollToDate As Date
+'Interaction
+Private m_ShowTodayButton As Boolean
+Private m_ViewModeSelect As Boolean
+Private m_ReadonlyProgress As Boolean
+Private m_ReadonlyDates As Boolean
+Private m_ReadonlyChart As Boolean
+Private m_AutoMoveLabel As Boolean
+Private m_MoveDependencies As Boolean
+'Scripts
 Private m_GanttJsSource As gcScriptSource
 Private m_GanttCssSource As gcScriptSource
 Private m_GanttJsCDN As String
 Private m_GanttCssCDN As String
 Private m_GanttJsPathFilename As String
 Private m_GanttCssPathFilename As String
-Private m_ViewModeSelect As Boolean
-Private m_Padding As Integer
-Private m_Lines As gcLines
-Private m_ReadonlyProgress As Boolean
-Private m_ReadonlyDates As Boolean
-Private m_ReadonlyChart As Boolean
-Private m_AutoMoveLabel As Boolean
-Private m_MoveDependencies As Boolean
-Private m_ScrollTo As gcScrollTo
-Private m_ScrollToDate As Date
 
 
 
@@ -92,6 +95,7 @@ Public Property Get Control() As Edge
     Set Control = m_Control
 End Property
 
+'Appearance
 Public Property Let Language(newValue As String)
     m_Language = newValue
 End Property
@@ -120,16 +124,10 @@ Public Property Get BarHeight() As Long
     BarHeight = m_BarHeight
 End Property
 
-Public Property Let ShowTodayButton(newValue As Boolean)
-    m_ShowTodayButton = newValue
-End Property
-Public Property Get ShowTodayButton() As Boolean
-    ShowTodayButton = m_ShowTodayButton
-End Property
-
 Public Property Let ArrowCurveRadius(newValue As Integer)
     m_ArrowCurveRadius = newValue
 End Property
+
 Public Property Get ArrowCurveRadius() As Integer
     ArrowCurveRadius = m_ArrowCurveRadius
 End Property
@@ -162,6 +160,86 @@ Public Property Get LowerHeaderHight() As Integer
     LowerHeaderHight = m_LowerHeaderHight
 End Property
 
+Public Property Let Padding(newValue As Integer)
+    m_Padding = newValue
+End Property
+Public Property Get Padding() As Integer
+    Padding = m_Padding
+End Property
+
+Public Property Let Lines(newValue As gcLines)
+    m_Lines = newValue
+End Property
+Public Property Get Lines() As gcLines
+    Lines = m_Lines
+End Property
+
+Public Property Let ScrollTo(newValue As gcScrollTo)
+    m_ScrollTo = newValue
+End Property
+Public Property Get ScrollTo() As gcScrollTo
+    ScrollTo = m_ScrollTo
+End Property
+
+Public Property Let ScrollToDate(newValue As Date)
+    m_ScrollToDate = newValue
+End Property
+Public Property Get ScrollToDate() As Date
+    ScrollToDate = m_ScrollToDate
+End Property
+
+'Interaction
+Public Property Let ShowTodayButton(newValue As Boolean)
+    m_ShowTodayButton = newValue
+End Property
+Public Property Get ShowTodayButton() As Boolean
+    ShowTodayButton = m_ShowTodayButton
+End Property
+
+Public Property Let ViewModeSelect(ByVal newValue As Boolean)
+    m_ViewModeSelect = newValue
+End Property
+Public Property Get ViewModeSelect() As Boolean
+    ViewModeSelect = m_ViewModeSelect
+End Property
+
+Public Property Let ReadonlyProgress(newValue As Boolean)
+    m_ReadonlyProgress = newValue
+End Property
+Public Property Get ReadonlyProgress() As Boolean
+    ReadonlyProgress = m_ReadonlyProgress
+End Property
+
+Public Property Let ReadonlyDates(newValue As Boolean)
+    m_ReadonlyDates = newValue
+End Property
+
+Public Property Get ReadonlyDates() As Boolean
+    ReadonlyDates = m_ReadonlyDates
+End Property
+
+Public Property Let ReadonlyChart(newValue As Boolean)
+    m_ReadonlyChart = newValue
+End Property
+Public Property Get ReadonlyChart() As Boolean
+    ReadonlyChart = m_ReadonlyChart
+End Property
+
+Public Property Let AutoMoveLabel(newValue As Boolean)
+    m_AutoMoveLabel = newValue
+End Property
+Public Property Get AutoMoveLabel() As Boolean
+    AutoMoveLabel = m_AutoMoveLabel
+End Property
+
+Public Property Let MoveDependencies(newValue As Boolean)
+    m_MoveDependencies = newValue
+End Property
+Public Property Get MoveDependencies() As Boolean
+    MoveDependencies = m_MoveDependencies
+End Property
+
+'Scripts
 Public Property Let GanttJsSource(ByVal newValue As gcScriptSource)
     m_GanttJsSource = newValue
 End Property
@@ -204,108 +282,40 @@ Public Property Get GanttCssPathFilename() As String
     GanttCssPathFilename = m_GanttCssPathFilename
 End Property
 
-Public Property Let ViewModeSelect(ByVal newValue As Boolean)
-    m_ViewModeSelect = newValue
-End Property
-Public Property Get ViewModeSelect() As Boolean
-    ViewModeSelect = m_ViewModeSelect
-End Property
-
-Public Property Let Padding(newValue As Integer)
-    m_Padding = newValue
-End Property
-Public Property Get Padding() As Integer
-    Padding = m_Padding
-End Property
-
-Public Property Let Lines(newValue As gcLines)
-    m_Lines = newValue
-End Property
-Public Property Get Lines() As gcLines
-    Lines = m_Lines
-End Property
-
-Public Property Let ReadonlyProgress(newValue As Boolean)
-    m_ReadonlyProgress = newValue
-End Property
-Public Property Get ReadonlyProgress() As Boolean
-    ReadonlyProgress = m_ReadonlyProgress
-End Property
-
-Public Property Let ReadonlyDates(newValue As Boolean)
-    m_ReadonlyDates = newValue
-End Property
-Public Property Get ReadonlyDates() As Boolean
-    ReadonlyDates = m_ReadonlyDates
-End Property
-
-Public Property Let ReadonlyChart(newValue As Boolean)
-    m_ReadonlyChart = newValue
-End Property
-Public Property Get ReadonlyChart() As Boolean
-    ReadonlyChart = m_ReadonlyChart
-End Property
-
-Public Property Let AutoMoveLabel(newValue As Boolean)
-    m_AutoMoveLabel = newValue
-End Property
-Public Property Get AutoMoveLabel() As Boolean
-    AutoMoveLabel = m_AutoMoveLabel
-End Property
-
-Public Property Let MoveDependencies(newValue As Boolean)
-    m_MoveDependencies = newValue
-End Property
-Public Property Get MoveDependencies() As Boolean
-    MoveDependencies = m_MoveDependencies
-End Property
-
-Public Property Let ScrollTo(newValue As gcScrollTo)
-    m_ScrollTo = newValue
-End Property
-Public Property Get ScrollTo() As gcScrollTo
-    ScrollTo = m_ScrollTo
-End Property
-
-Public Property Let ScrollToDate(newValue As Date)
-    m_ScrollToDate = newValue
-End Property
-Public Property Get ScrollToDate() As Date
-    ScrollToDate = m_ScrollToDate
-End Property
-
 
 
 '### Instantiation
 
 Private Sub Class_Initialize()
 
+    'Appearance
+    Me.Language = "en"
+    Me.ColumnWidth = 45
+    Me.BarHeight = 30
+    Me.ArrowCurveRadius = 5
+    Me.TaskBarCurveRadius = 3
+    Me.ContainerHight = "auto"
+    Me.UpperHeaderHight = 45
+    Me.LowerHeaderHight = 30
+    Me.Padding = 18
+    Me.Lines = gcLines.lnBoth
+    Me.ScrollTo = gcScrollTo.stToday
+    Me.ScrollToDate = Format$(Date, "YYYY-MM-DD")
+    'Interaction
+    Me.ShowTodayButton = True
+    Me.ViewModeSelect = False
+    Me.ReadonlyProgress = False
+    Me.ReadonlyDates = False
+    Me.ReadonlyChart = False
+    Me.AutoMoveLabel = False
+    Me.MoveDependencies = True
+    'Scripts
     Me.GanttJsSource = gcScriptSource.CDN
     Me.GanttJsCDN = "https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.umd.js"
     Me.GanttJsPathFilename = CurrentProject.Path & "\frappe-gantt.umd.js"
     Me.GanttCssSource = gcScriptSource.CDN
     Me.GanttCssCDN = "https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.css"
     Me.GanttCssPathFilename = CurrentProject.Path & "\frappe-gantt.css"
-    
-    Me.Language = "en"
-    Me.ColumnWidth = 45
-    Me.BarHeight = 30
-    Me.ShowTodayButton = True
-    Me.ArrowCurveRadius = 5
-    Me.TaskBarCurveRadius = 3
-    Me.ContainerHight = "auto"
-    Me.UpperHeaderHight = 45
-    Me.LowerHeaderHight = 30
-    Me.ViewModeSelect = False
-    Me.Padding = 18
-    Me.Lines = gcLines.lnBoth
-    Me.ReadonlyProgress = False
-    Me.ReadonlyDates = False
-    Me.ReadonlyChart = False
-    Me.AutoMoveLabel = False
-    Me.MoveDependencies = True
-    Me.ScrollTo = gcScrollTo.stToday
-    Me.ScrollToDate = Format$(Date, "YYYY-MM-DD")
     
 End Sub
 
@@ -412,7 +422,8 @@ Private Function getScript() As String
     strText = strText & getTaskData
     strText = strText & "        const gantt = new Gantt('#gantt', tasks, {" & vbCrLf
     strText = strText & getInteractivity
-    strText = strText & getOptions
+    strText = strText & getAppearance
+    strText = strText & getInteraction
     strText = strText & "        });" & vbCrLf
     strText = strText & "    </script>" & vbCrLf
     strText = strText & getCustomColors
@@ -492,7 +503,7 @@ Private Function getInteractivity() As String
 
 End Function
 
-Private Function getOptions() As String
+Private Function getAppearance() As String
 
     'Variables
     Dim strText As String
@@ -501,21 +512,34 @@ Private Function getOptions() As String
     strText = strText & "            language: '" & Me.Language & "'," & vbCrLf
     strText = strText & "            column_width: " & Me.ColumnWidth & "," & vbCrLf
     strText = strText & "            bar_height: " & Me.BarHeight & "," & vbCrLf
-    If Me.ShowTodayButton = False Then
-        strText = strText & "            today_button: false," & vbCrLf
-    End If
+    strText = strText & "            arrow_curve: " & Me.ArrowCurveRadius & "," & vbCrLf
+    strText = strText & "            bar_corner_radius: " & Me.TaskBarCurveRadius & "," & vbCrLf
     If Me.ContainerHight <> "auto" Then
         strText = strText & "            container_height: " & Me.ContainerHight & "," & vbCrLf
     End If
-    strText = strText & "            arrow_curve: " & Me.ArrowCurveRadius & "," & vbCrLf
-    strText = strText & "            bar_corner_radius: " & Me.TaskBarCurveRadius & "," & vbCrLf
     strText = strText & "            upper_header_height: " & Me.UpperHeaderHight & "," & vbCrLf
     strText = strText & "            lower_header_height: " & Me.LowerHeaderHight & "," & vbCrLf
+    strText = strText & "            padding: " & Me.Padding & "," & vbCrLf
+    strText = strText & "            lines: " & getLines & "," & vbCrLf
     strText = strText & "            scroll_to: " & getScrollTo & "," & vbCrLf
+    
+    strText = Left$(strText, Len(strText) - 3) & vbCrLf
+    
+    getAppearance = strText
+
+End Function
+
+Private Function getInteraction() As String
+
+    'Variables
+    Dim strText As String
+    
+    If Me.ShowTodayButton = False Then
+        strText = strText & "            today_button: false," & vbCrLf
+    End If
     If Me.ViewModeSelect = True Then
         strText = strText & "            view_mode_select: true" & "," & vbCrLf
     End If
-    strText = strText & "            padding: " & Me.Padding & "," & vbCrLf
     If Me.ReadonlyProgress = True Then
         strText = strText & "            readonly_progress: true" & "," & vbCrLf
     End If
@@ -531,9 +555,12 @@ Private Function getOptions() As String
     If Me.MoveDependencies = False Then
         strText = strText & "            move_dependencies: false" & "," & vbCrLf
     End If
-    strText = strText & "            lines: " & getLines & "" & vbCrLf
-
-    getOptions = strText
+    
+    If Len(strText) > 0 Then
+        strText = Left$(strText, Len(strText) - 3) & vbCrLf
+    End If
+    
+    getInteraction = strText
 
 End Function
 
