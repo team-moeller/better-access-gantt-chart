@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.25.05  published: 05.05.2026                                                      #
+'# Version 1.26.05  published: 11.05.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -51,6 +51,7 @@ Public Sub cmdCreateGanttChart_Click()
     myGantt.Lines = Nz(Forms!frm_configuration.cboLines, gcLines.lnBoth)
     myGantt.ScrollTo = Nz(Forms!frm_configuration.cboScrollTo, gcScrollTo.stToday)
     myGantt.ScrollToDate = Nz(Forms!frm_configuration.txtScrollToDate, Date)
+    myGantt.ShowExpectedProgress = Nz(Forms!frm_configuration.chkShowExpectedProgress, False)
     'Interaction
     myGantt.ShowTodayButton = Nz(Forms!frm_configuration.chkShowTodayButton, True)
     myGantt.ViewModeSelect = Nz(Forms!frm_configuration.chkViewModeSelect, False)

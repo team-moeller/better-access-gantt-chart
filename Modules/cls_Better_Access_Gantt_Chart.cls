@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.25.05  published: 05.05.2026                                                      #
+'# Version 1.26.05  published: 11.05.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -68,6 +68,7 @@ Private m_Padding As Integer
 Private m_Lines As gcLines
 Private m_ScrollTo As gcScrollTo
 Private m_ScrollToDate As Date
+Private m_ShowExpectedProgress As Boolean
 'Interaction
 Private m_ShowTodayButton As Boolean
 Private m_ViewModeSelect As Boolean
@@ -187,6 +188,12 @@ End Property
 Public Property Get ScrollToDate() As Date
     ScrollToDate = m_ScrollToDate
 End Property
+Public Property Let ShowExpectedProgress(newValue As Boolean)
+    m_ShowExpectedProgress = newValue
+End Property
+Public Property Get ShowExpectedProgress() As Boolean
+    ShowExpectedProgress = m_ShowExpectedProgress
+End Property
 
 'Interaction
 Public Property Let ShowTodayButton(newValue As Boolean)
@@ -301,6 +308,7 @@ Private Sub Class_Initialize()
     Me.Lines = gcLines.lnBoth
     Me.ScrollTo = gcScrollTo.stToday
     Me.ScrollToDate = Format$(Date, "YYYY-MM-DD")
+    Me.ShowExpectedProgress = False
     'Interaction
     Me.ShowTodayButton = True
     Me.ViewModeSelect = False
@@ -522,6 +530,9 @@ Private Function getAppearance() As String
     strText = strText & "            padding: " & Me.Padding & "," & vbCrLf
     strText = strText & "            lines: " & getLines & "," & vbCrLf
     strText = strText & "            scroll_to: " & getScrollTo & "," & vbCrLf
+    If Me.ShowExpectedProgress = True Then
+        strText = strText & "            show_expected_progress: true" & "," & vbCrLf
+    End If
     
     strText = Left$(strText, Len(strText) - 3) & vbCrLf
     
