@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.26.05  published: 11.05.2026                                                      #
+'# Version 1.27.06  published: 12.05.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -77,6 +77,8 @@ Private m_ReadonlyDates As Boolean
 Private m_ReadonlyChart As Boolean
 Private m_AutoMoveLabel As Boolean
 Private m_MoveDependencies As Boolean
+'Interactivity
+Private m_ReactOnClick As Boolean
 'Scripts
 Private m_GanttJsSource As gcScriptSource
 Private m_GanttCssSource As gcScriptSource
@@ -246,6 +248,14 @@ Public Property Get MoveDependencies() As Boolean
     MoveDependencies = m_MoveDependencies
 End Property
 
+'Interactivity
+Public Property Let ReactOnClick(newValue As Boolean)
+    m_ReactOnClick = newValue
+End Property
+Public Property Get ReactOnClick() As Boolean
+    ReactOnClick = m_ReactOnClick
+End Property
+
 'Scripts
 Public Property Let GanttJsSource(ByVal newValue As gcScriptSource)
     m_GanttJsSource = newValue
@@ -317,6 +327,8 @@ Private Sub Class_Initialize()
     Me.ReadonlyChart = False
     Me.AutoMoveLabel = False
     Me.MoveDependencies = True
+    'Interactivity
+    Me.ReactOnClick = True
     'Scripts
     Me.GanttJsSource = gcScriptSource.CDN
     Me.GanttJsCDN = "https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.umd.js"
@@ -503,9 +515,11 @@ Private Function getInteractivity() As String
     'Variables
     Dim strText As String
     
-    strText = strText & "            on_click: function(task) {" & vbCrLf
-    strText = strText & "                window.AccessEdgeBridge = task.id;" & vbCrLf
-    strText = strText & "            }," & vbCrLf
+    If Me.ReactOnClick = True Then
+        strText = strText & "            on_click: function(task) {" & vbCrLf
+        strText = strText & "                window.AccessEdgeBridge = task.id;" & vbCrLf
+        strText = strText & "            }," & vbCrLf
+    End If
 
     getInteractivity = strText
 
