@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.27.06  published: 12.05.2026                                                      #
+'# Version 1.28.06  published: 13.05.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -79,6 +79,7 @@ Private m_AutoMoveLabel As Boolean
 Private m_MoveDependencies As Boolean
 'Interactivity
 Private m_ReactOnClick As Boolean
+Private m_ReactOnProgressChange As Boolean
 'Scripts
 Private m_GanttJsSource As gcScriptSource
 Private m_GanttCssSource As gcScriptSource
@@ -255,6 +256,12 @@ End Property
 Public Property Get ReactOnClick() As Boolean
     ReactOnClick = m_ReactOnClick
 End Property
+Public Property Let ReactOnProgressChange(newValue As Boolean)
+    m_ReactOnProgressChange = newValue
+End Property
+Public Property Get ReactOnProgressChange() As Boolean
+    ReactOnProgressChange = m_ReactOnProgressChange
+End Property
 
 'Scripts
 Public Property Let GanttJsSource(ByVal newValue As gcScriptSource)
@@ -329,6 +336,7 @@ Private Sub Class_Initialize()
     Me.MoveDependencies = True
     'Interactivity
     Me.ReactOnClick = True
+    Me.ReactOnProgressChange = True
     'Scripts
     Me.GanttJsSource = gcScriptSource.CDN
     Me.GanttJsCDN = "https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.umd.js"
@@ -517,7 +525,15 @@ Private Function getInteractivity() As String
     
     If Me.ReactOnClick = True Then
         strText = strText & "            on_click: function(task) {" & vbCrLf
+        strText = strText & "                if (window.AccessEdgeBridge !== null) {" & vbCrLf
+        strText = strText & "                    return;" & vbCrLf
+        strText = strText & "                }" & vbCrLf
         strText = strText & "                window.AccessEdgeBridge = task.id;" & vbCrLf
+        strText = strText & "            }," & vbCrLf
+    End If
+    If Me.ReactOnProgressChange = True Then
+        strText = strText & "            on_progress_change: function(task, progress) {" & vbCrLf
+        strText = strText & "                window.AccessEdgeBridge = task.id + '|' + progress;" & vbCrLf
         strText = strText & "            }," & vbCrLf
     End If
 

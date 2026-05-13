@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.27.06  published: 12.05.2026                                                      #
+'# Version 1.28.06  published: 13.05.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -62,6 +62,7 @@ Public Sub cmdCreateGanttChart_Click()
     myGantt.MoveDependencies = Nz(Forms!frm_configuration.chkMoveDependencies, True)
     'Interactivity
     myGantt.ReactOnClick = Nz(Forms!frm_configuration.chkReactOnClick, True)
+    myGantt.ReactOnProgressChange = Nz(Forms!frm_configuration.chkReactOnProgressChange, True)
     'Scripts
     myGantt.GanttJsSource = Forms!frm_configuration.cboFrappeJsSource
     myGantt.GanttJsCDN = Forms!frm_configuration.txtFrappeJsCDN
