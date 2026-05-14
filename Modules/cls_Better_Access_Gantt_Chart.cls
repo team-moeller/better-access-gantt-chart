@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.28.06  published: 13.05.2026                                                      #
+'# Version 1.29.05  published: 14.05.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -80,6 +80,7 @@ Private m_MoveDependencies As Boolean
 'Interactivity
 Private m_ReactOnClick As Boolean
 Private m_ReactOnProgressChange As Boolean
+Private m_ReactOnDateChange As Boolean
 'Scripts
 Private m_GanttJsSource As gcScriptSource
 Private m_GanttCssSource As gcScriptSource
@@ -256,11 +257,19 @@ End Property
 Public Property Get ReactOnClick() As Boolean
     ReactOnClick = m_ReactOnClick
 End Property
+
 Public Property Let ReactOnProgressChange(newValue As Boolean)
     m_ReactOnProgressChange = newValue
 End Property
 Public Property Get ReactOnProgressChange() As Boolean
     ReactOnProgressChange = m_ReactOnProgressChange
+End Property
+
+Public Property Let ReactOnDateChange(newValue As Boolean)
+    m_ReactOnDateChange = newValue
+End Property
+Public Property Get ReactOnDateChange() As Boolean
+    ReactOnDateChange = m_ReactOnDateChange
 End Property
 
 'Scripts
@@ -337,6 +346,7 @@ Private Sub Class_Initialize()
     'Interactivity
     Me.ReactOnClick = True
     Me.ReactOnProgressChange = True
+    Me.ReactOnDateChange = True
     'Scripts
     Me.GanttJsSource = gcScriptSource.CDN
     Me.GanttJsCDN = "https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.umd.js"
@@ -534,6 +544,11 @@ Private Function getInteractivity() As String
     If Me.ReactOnProgressChange = True Then
         strText = strText & "            on_progress_change: function(task, progress) {" & vbCrLf
         strText = strText & "                window.AccessEdgeBridge = task.id + '|' + progress;" & vbCrLf
+        strText = strText & "            }," & vbCrLf
+    End If
+    If Me.ReactOnDateChange = True Then
+        strText = strText & "            on_date_change: function(task, start, end) {" & vbCrLf
+        strText = strText & "                window.AccessEdgeBridge = task.id + '|' + start + '|' + end;" & vbCrLf
         strText = strText & "            }," & vbCrLf
     End If
 
