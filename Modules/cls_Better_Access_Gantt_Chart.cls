@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.29.05  published: 14.05.2026                                                      #
+'# Version 1.30.07  published: 17.05.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -81,6 +81,21 @@ Private m_MoveDependencies As Boolean
 Private m_ReactOnClick As Boolean
 Private m_ReactOnProgressChange As Boolean
 Private m_ReactOnDateChange As Boolean
+'Theming
+Private m_ThemingTaskBarColor As String
+Private m_ThemingBarBorderColor As String
+Private m_ThemingProgressColor As String
+Private m_ThemingArrowColor As String
+Private m_ThemingHandleColor As String
+Private m_ThemingTextDark As String
+Private m_ThemingTextLight As String
+Private m_ThemingTextMuted As String
+Private m_ThemingHeaderBackground As String
+Private m_ThemingRowColor As String
+Private m_ThemingRowBorderColor As String
+Private m_ThemingTodayHighlightColor As String
+Private m_ThemingWeekendHighlightColor As String
+Private m_ThemingTickColor As String
 'Scripts
 Private m_GanttJsSource As gcScriptSource
 Private m_GanttCssSource As gcScriptSource
@@ -272,6 +287,105 @@ Public Property Get ReactOnDateChange() As Boolean
     ReactOnDateChange = m_ReactOnDateChange
 End Property
 
+'Theming
+Public Property Let ThemingTaskBarColor(ByVal newValue As String)
+    m_ThemingTaskBarColor = newValue
+End Property
+Public Property Get ThemingTaskBarColor() As String
+    ThemingTaskBarColor = m_ThemingTaskBarColor
+End Property
+
+Public Property Let ThemingBarBorderColor(ByVal newValue As String)
+    m_ThemingBarBorderColor = newValue
+End Property
+Public Property Get ThemingBarBorderColor() As String
+    ThemingBarBorderColor = m_ThemingBarBorderColor
+End Property
+
+Public Property Let ThemingProgressColor(ByVal newValue As String)
+    m_ThemingProgressColor = newValue
+End Property
+Public Property Get ThemingProgressColor() As String
+    ThemingProgressColor = m_ThemingProgressColor
+End Property
+
+Public Property Let ThemingArrowColor(ByVal newValue As String)
+    m_ThemingArrowColor = newValue
+End Property
+Public Property Get ThemingArrowColor() As String
+    ThemingArrowColor = m_ThemingArrowColor
+End Property
+
+Public Property Let ThemingHandleColor(ByVal newValue As String)
+    m_ThemingHandleColor = newValue
+End Property
+Public Property Get ThemingHandleColor() As String
+    ThemingHandleColor = m_ThemingHandleColor
+End Property
+
+Public Property Let ThemingTextDark(ByVal newValue As String)
+    m_ThemingTextDark = newValue
+End Property
+Public Property Get ThemingTextDark() As String
+    ThemingTextDark = m_ThemingTextDark
+End Property
+
+Public Property Let ThemingTextLight(ByVal newValue As String)
+    m_ThemingTextLight = newValue
+End Property
+Public Property Get ThemingTextLight() As String
+    ThemingTextLight = m_ThemingTextLight
+End Property
+
+Public Property Let ThemingTextMuted(ByVal newValue As String)
+    m_ThemingTextMuted = newValue
+End Property
+Public Property Get ThemingTextMuted() As String
+    ThemingTextMuted = m_ThemingTextMuted
+End Property
+
+Public Property Let ThemingHeaderBackground(ByVal newValue As String)
+    m_ThemingHeaderBackground = newValue
+End Property
+Public Property Get ThemingHeaderBackground() As String
+    ThemingHeaderBackground = m_ThemingHeaderBackground
+End Property
+
+Public Property Let ThemingRowColor(ByVal newValue As String)
+    m_ThemingRowColor = newValue
+End Property
+Public Property Get ThemingRowColor() As String
+    ThemingRowColor = m_ThemingRowColor
+End Property
+
+Public Property Let ThemingRowBorderColor(ByVal newValue As String)
+    m_ThemingRowBorderColor = newValue
+End Property
+Public Property Get ThemingRowBorderColor() As String
+    ThemingRowBorderColor = m_ThemingRowBorderColor
+End Property
+
+Public Property Let ThemingTodayHighlightColor(ByVal newValue As String)
+    m_ThemingTodayHighlightColor = newValue
+End Property
+Public Property Get ThemingTodayHighlightColor() As String
+    ThemingTodayHighlightColor = m_ThemingTodayHighlightColor
+End Property
+
+Public Property Let ThemingWeekendHighlightColor(ByVal newValue As String)
+    m_ThemingWeekendHighlightColor = newValue
+End Property
+Public Property Get ThemingWeekendHighlightColor() As String
+    ThemingWeekendHighlightColor = m_ThemingWeekendHighlightColor
+End Property
+
+Public Property Let ThemingTickColor(ByVal newValue As String)
+    m_ThemingTickColor = newValue
+End Property
+Public Property Get ThemingTickColor() As String
+    ThemingTickColor = m_ThemingTickColor
+End Property
+
 'Scripts
 Public Property Let GanttJsSource(ByVal newValue As gcScriptSource)
     m_GanttJsSource = newValue
@@ -440,6 +554,7 @@ Private Function getHead() As String
     strText = strText & "    <style>body{margin:0;padding:0;}</style>" & vbCrLf
     strText = strText & "    <script src=" & getLocationJs & "></script>" & vbCrLf
     strText = strText & "    <link rel='stylesheet' href=" & getLocationCss & "/>" & vbCrLf
+    strText = strText & getCustomColors
     strText = strText & "</head>" & vbCrLf
     strText = strText & "<body>" & vbCrLf
     
@@ -464,7 +579,6 @@ Private Function getScript() As String
     strText = strText & getInteraction
     strText = strText & "        });" & vbCrLf
     strText = strText & "    </script>" & vbCrLf
-    strText = strText & getCustomColors
     
     getScript = strText
 
@@ -480,6 +594,65 @@ Private Function getFoot() As String
     
     getFoot = strText
     
+End Function
+
+Private Function getCustomColors() As String
+
+    'Variables
+    Dim strText As String
+
+    strText = strText & "    <style>" & vbCrLf
+    strText = strText & "        /* Custom colors */" & vbCrLf
+    strText = strText & "        .bar-red .bar {fill: #e74c3c !important;}" & vbCrLf
+    strText = strText & "        .bar-green .bar {fill: #2ecc71 !important;}" & vbCrLf
+    strText = strText & "        :root {" & vbCrLf
+    If Len(Nz(Me.ThemingTaskBarColor, vbNullString)) > 0 Then
+        strText = strText & "            --g-bar-color: " & Me.ThemingTaskBarColor & ";" & vbCrLf
+    End If
+    If Len(Nz(Me.ThemingBarBorderColor, vbNullString)) > 0 Then
+        strText = strText & "            --g-bar-border: " & Me.ThemingBarBorderColor & ";" & vbCrLf
+    End If
+    If Len(Nz(Me.ThemingProgressColor, vbNullString)) > 0 Then
+        strText = strText & "            --g-progress-color: " & Me.ThemingProgressColor & ";" & vbCrLf
+    End If
+    If Len(Nz(Me.ThemingArrowColor, vbNullString)) > 0 Then
+        strText = strText & "            --g-arrow-color: " & Me.ThemingArrowColor & ";" & vbCrLf
+    End If
+    If Len(Nz(Me.ThemingHandleColor, vbNullString)) > 0 Then
+        strText = strText & "            --g-handle-color: " & Me.ThemingHandleColor & ";" & vbCrLf
+    End If
+    If Len(Nz(Me.ThemingTextDark, vbNullString)) > 0 Then
+        strText = strText & "            --g-text-dark: " & Me.ThemingTextDark & ";" & vbCrLf
+    End If
+    If Len(Nz(Me.ThemingTextLight, vbNullString)) > 0 Then
+        strText = strText & "            --g-text-light: " & Me.ThemingTextLight & ";" & vbCrLf
+    End If
+    If Len(Nz(Me.ThemingTextMuted, vbNullString)) > 0 Then
+        strText = strText & "            --g-text-muted: " & Me.ThemingTextMuted & ";" & vbCrLf
+    End If
+    If Len(Nz(Me.ThemingHeaderBackground, vbNullString)) > 0 Then
+        strText = strText & "            --g-header-background: " & Me.ThemingHeaderBackground & ";" & vbCrLf
+    End If
+    If Len(Nz(Me.ThemingRowColor, vbNullString)) > 0 Then
+        strText = strText & "            --g-row-color: " & Me.ThemingRowColor & ";" & vbCrLf
+    End If
+    If Len(Nz(Me.ThemingRowBorderColor, vbNullString)) > 0 Then
+        strText = strText & "            --g-row-border-color: " & Me.ThemingRowBorderColor & ";" & vbCrLf
+    End If
+    If Len(Nz(Me.ThemingTodayHighlightColor, vbNullString)) > 0 Then
+        strText = strText & "            --g-today-highlight: " & Me.ThemingTodayHighlightColor & ";" & vbCrLf
+    End If
+    If Len(Nz(Me.ThemingWeekendHighlightColor, vbNullString)) > 0 Then
+        strText = strText & "            --g-weekend-highlight-color: " & Me.ThemingWeekendHighlightColor & ";" & vbCrLf
+    End If
+    If Len(Nz(Me.ThemingTickColor, vbNullString)) > 0 Then
+        strText = strText & "            --g-tick-color: " & Me.ThemingTickColor & ";" & vbCrLf
+    End If
+    strText = strText & "        }" & vbCrLf
+    strText = strText & "    </style>" & vbCrLf
+
+    getCustomColors = strText
+
 End Function
 
 Private Function getTaskData() As String
@@ -617,21 +790,6 @@ Private Function getInteraction() As String
     End If
     
     getInteraction = strText
-
-End Function
-
-Private Function getCustomColors() As String
-
-    'Variables
-    Dim strText As String
-
-    strText = strText & "    <style>" & vbCrLf
-    strText = strText & "        /* Custom colors */" & vbCrLf
-    strText = strText & "        .bar-red .bar {fill: #e74c3c !important;}" & vbCrLf
-    strText = strText & "        .bar-green .bar {fill: #2ecc71 !important;}" & vbCrLf
-    strText = strText & "    </style>" & vbCrLf
-
-    getCustomColors = strText
 
 End Function
 

@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.29.05  published: 14.05.2026                                                      #
+'# Version 1.30.07  published: 17.05.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -64,6 +64,21 @@ Public Sub cmdCreateGanttChart_Click()
     myGantt.ReactOnClick = Nz(Forms!frm_configuration.chkReactOnClick, True)
     myGantt.ReactOnProgressChange = Nz(Forms!frm_configuration.chkReactOnProgressChange, True)
     myGantt.ReactOnDateChange = Nz(Forms!frm_configuration.chkReactOnDateChange, True)
+    'Theming
+    myGantt.ThemingTaskBarColor = Nz(Forms!frm_configuration.txtThemingTaskBarColor, vbNullString)
+    myGantt.ThemingBarBorderColor = Nz(Forms!frm_configuration.txtThemingBarBorderColor, vbNullString)
+    myGantt.ThemingProgressColor = Nz(Forms!frm_configuration.txtThemingProgressColor, vbNullString)
+    myGantt.ThemingArrowColor = Nz(Forms!frm_configuration.txtThemingArrowColor, vbNullString)
+    myGantt.ThemingHandleColor = Nz(Forms!frm_configuration.txtThemingHandleColor, vbNullString)
+    myGantt.ThemingTextDark = Nz(Forms!frm_configuration.txtThemingTextDark, vbNullString)
+    myGantt.ThemingTextLight = Nz(Forms!frm_configuration.txtThemingTextLight, vbNullString)
+    myGantt.ThemingTextMuted = Nz(Forms!frm_configuration.txtThemingTextMuted, vbNullString)
+    myGantt.ThemingHeaderBackground = Nz(Forms!frm_configuration.txtThemingHeaderBackground, vbNullString)
+    myGantt.ThemingRowColor = Nz(Forms!frm_configuration.txtThemingRowColor, vbNullString)
+    myGantt.ThemingRowBorderColor = Nz(Forms!frm_configuration.txtThemingRowBorderColor, vbNullString)
+    myGantt.ThemingTodayHighlightColor = Nz(Forms!frm_configuration.txtThemingTodayHighlight, vbNullString)
+    myGantt.ThemingWeekendHighlightColor = Nz(Forms!frm_configuration.txtThemingWeekendHighlight, vbNullString)
+    myGantt.ThemingTickColor = Nz(Forms!frm_configuration.txtThemingTickColor, vbNullString)
     'Scripts
     myGantt.GanttJsSource = Forms!frm_configuration.cboFrappeJsSource
     myGantt.GanttJsCDN = Forms!frm_configuration.txtFrappeJsCDN
