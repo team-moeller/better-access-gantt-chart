@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.30.07  published: 17.05.2026                                                      #
+'# Version 1.31.01  published: 18.05.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -38,6 +38,45 @@ Private Sub cboScrollTo_AfterUpdate()
             Me.txtScrollToDate.Enabled = True
         Case Else
             Me.txtScrollToDate.Enabled = False
+    End Select
+
+End Sub
+
+Private Sub fraThemingTheme_AfterUpdate()
+
+    Select Case Me.fraThemingTheme
+        Case 1
+            Me.txtThemingTaskBarColor = "#fff"
+            Me.txtThemingBarBorderColor = "#fff"
+            Me.txtThemingProgressColor = "#dbdbdb"
+            Me.txtThemingArrowColor = "#1f2937"
+            Me.txtThemingHandleColor = "#37352f"
+            Me.txtThemingTextDark = "#171717"
+            Me.txtThemingTextLight = "#fff"
+            Me.txtThemingTextMuted = "#7c7c7c"
+            Me.txtThemingHeaderBackground = "#fff"
+            Me.txtThemingRowColor = "#fdfdfd"
+            Me.txtThemingRowBorderColor = "#c7c7c7"
+            Me.txtThemingTodayHighlight = "#37352f"
+            Me.txtThemingWeekendHighlight = "#f7f7f7"
+            Me.txtThemingTickColor = "#e0e0e0"
+        Case 2
+            Me.txtThemingTaskBarColor = "#3a3a3a"
+            Me.txtThemingBarBorderColor = "#3a3a3a"
+            Me.txtThemingProgressColor = "#4a6baf"
+            Me.txtThemingArrowColor = "#9aa5b1"
+            Me.txtThemingHandleColor = "#555"
+            Me.txtThemingTextDark = "#e0e0e0"
+            Me.txtThemingTextLight = "#f5f5f5"
+            Me.txtThemingTextMuted = "#a0a0a0"
+            Me.txtThemingHeaderBackground = "#1c1c1c"
+            Me.txtThemingRowColor = "#252525"
+            Me.txtThemingRowBorderColor = "#3d3d3d"
+            Me.txtThemingTodayHighlight = "#ff9d48"
+            Me.txtThemingWeekendHighlight = "#2d2d2d"
+            Me.txtThemingTickColor = "#444"
+        Case Else
+            'Do Nothing
     End Select
 
 End Sub
