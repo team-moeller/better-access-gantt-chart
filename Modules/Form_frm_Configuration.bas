@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.31.01  published: 18.05.2026                                                      #
+'# Version 1.32.03  published: 19.05.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -75,6 +75,21 @@ Private Sub fraThemingTheme_AfterUpdate()
             Me.txtThemingTodayHighlight = "#ff9d48"
             Me.txtThemingWeekendHighlight = "#2d2d2d"
             Me.txtThemingTickColor = "#444"
+        Case 3
+            Me.txtThemingTaskBarColor = "#d7e8ff"
+            Me.txtThemingBarBorderColor = "#a9c9f5"
+            Me.txtThemingProgressColor = "#4a90e2"
+            Me.txtThemingArrowColor = "#2f6fbf"
+            Me.txtThemingHandleColor = "#3c5f8c"
+            Me.txtThemingTextDark = "#1c2a3a"
+            Me.txtThemingTextLight = "#f0f6ff"
+            Me.txtThemingTextMuted = "#6b8bb5"
+            Me.txtThemingHeaderBackground = "#e8f1ff"
+            Me.txtThemingRowColor = "#f5f9ff"
+            Me.txtThemingRowBorderColor = "#c7d9f2"
+            Me.txtThemingTodayHighlight = "#4a90e2"
+            Me.txtThemingWeekendHighlight = "#e1ecfa"
+            Me.txtThemingTickColor = "#b4c9e6"
         Case Else
             'Do Nothing
     End Select
