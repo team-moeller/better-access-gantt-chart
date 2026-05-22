@@ -2,7 +2,7 @@ Attribute VB_Name = "mdl_Helpers"
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.32.03  published: 19.05.2026                                                      #
+'# Version 1.33.06  published: 22.05.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -151,7 +151,7 @@ Public Sub PrepareAndExportModules(Optional ByVal TagVersion As Boolean = True)
     Dim vbc As Object
     
     MakeSureDirectoryPathExists CurrentProject.Path & "\Modules\"
-    Version = DMax("V_Number", "tbl_VersionHistory")
+    Version = DLast("V_Number", "tbl_VersionHistory")
     CodeLine = "'# Version " & Version & "  published: " & Format$(Date, "dd.mm.yyyy") & "                                                      #"
     
     For Each vbc In Application.VBE.ActiveVBProject.VBComponents

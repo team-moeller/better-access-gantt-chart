@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.32.03  published: 19.05.2026                                                      #
+'# Version 1.33.06  published: 22.05.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -48,6 +48,12 @@ Public Enum gcScrollTo
     stDate = 4
 End Enum
 
+Public Enum gcTheme
+    thDefault = 0
+    thDarkMode = 1
+    thBlue = 2
+End Enum
+
 
 
 '### Members
@@ -82,6 +88,7 @@ Private m_ReactOnClick As Boolean
 Private m_ReactOnProgressChange As Boolean
 Private m_ReactOnDateChange As Boolean
 'Theming
+Private m_Theme As gcTheme
 Private m_ThemingTaskBarColor As String
 Private m_ThemingBarBorderColor As String
 Private m_ThemingProgressColor As String
@@ -288,6 +295,49 @@ Public Property Get ReactOnDateChange() As Boolean
 End Property
 
 'Theming
+Public Property Let Theme(ByVal newValue As gcTheme)
+    m_Theme = newValue
+    Select Case m_Theme
+        Case 0
+            'Do Nothing
+        Case 1
+            Me.ThemingTaskBarColor = "#3a3a3a"
+            Me.ThemingBarBorderColor = "#3a3a3a"
+            Me.ThemingProgressColor = "#4a6baf"
+            Me.ThemingArrowColor = "#9aa5b1"
+            Me.ThemingHandleColor = "#555"
+            Me.ThemingTextDark = "#e0e0e0"
+            Me.ThemingTextLight = "#f5f5f5"
+            Me.ThemingTextMuted = "#a0a0a0"
+            Me.ThemingHeaderBackground = "#1c1c1c"
+            Me.ThemingRowColor = "#252525"
+            Me.ThemingRowBorderColor = "#3d3d3d"
+            Me.ThemingTodayHighlightColor = "#ff9d48"
+            Me.ThemingWeekendHighlightColor = "#2d2d2d"
+            Me.ThemingTickColor = "#444"
+        Case 2
+            Me.ThemingTaskBarColor = "#d7e8ff"
+            Me.ThemingBarBorderColor = "#a9c9f5"
+            Me.ThemingProgressColor = "#4a90e2"
+            Me.ThemingArrowColor = "#2f6fbf"
+            Me.ThemingHandleColor = "#3c5f8c"
+            Me.ThemingTextDark = "#1c2a3a"
+            Me.ThemingTextLight = "#f0f6ff"
+            Me.ThemingTextMuted = "#6b8bb5"
+            Me.ThemingHeaderBackground = "#e8f1ff"
+            Me.ThemingRowColor = "#f5f9ff"
+            Me.ThemingRowBorderColor = "#c7d9f2"
+            Me.ThemingTodayHighlightColor = "#4a90e2"
+            Me.ThemingWeekendHighlightColor = "#e1ecfa"
+            Me.ThemingTickColor = "#b4c9e6"
+        Case Else
+            'Do Nothing
+    End Select
+End Property
+Public Property Get Theme() As gcTheme
+    Theme = m_Theme
+End Property
+
 Public Property Let ThemingTaskBarColor(ByVal newValue As String)
     m_ThemingTaskBarColor = newValue
 End Property
@@ -461,6 +511,8 @@ Private Sub Class_Initialize()
     Me.ReactOnClick = True
     Me.ReactOnProgressChange = True
     Me.ReactOnDateChange = True
+    'Theming
+    Me.Theme = gcTheme.thDefault
     'Scripts
     Me.GanttJsSource = gcScriptSource.CDN
     Me.GanttJsCDN = "https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.umd.js"
