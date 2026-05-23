@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.33.06  published: 22.05.2026                                                      #
+'# Version 1.34.06  published: 23.05.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -42,54 +42,54 @@ Private Sub cboScrollTo_AfterUpdate()
 
 End Sub
 
-Private Sub fraThemingTheme_AfterUpdate()
+Private Sub fraColorTheme_AfterUpdate()
 
-    Select Case Me.fraThemingTheme
+    Select Case Me.fraColorTheme
         Case 0
-            Me.txtThemingTaskBarColor = "#fff"
-            Me.txtThemingBarBorderColor = "#fff"
-            Me.txtThemingProgressColor = "#dbdbdb"
-            Me.txtThemingArrowColor = "#1f2937"
-            Me.txtThemingHandleColor = "#37352f"
-            Me.txtThemingTextDark = "#171717"
-            Me.txtThemingTextLight = "#fff"
-            Me.txtThemingTextMuted = "#7c7c7c"
-            Me.txtThemingHeaderBackground = "#fff"
-            Me.txtThemingRowColor = "#fdfdfd"
-            Me.txtThemingRowBorderColor = "#c7c7c7"
-            Me.txtThemingTodayHighlight = "#37352f"
-            Me.txtThemingWeekendHighlight = "#f7f7f7"
-            Me.txtThemingTickColor = "#e0e0e0"
+            Me.txtColorTaskBarColor = "#fff"
+            Me.txtColorBarBorderColor = "#fff"
+            Me.txtColorProgressColor = "#dbdbdb"
+            Me.txtColorArrowColor = "#1f2937"
+            Me.txtColorHandleColor = "#37352f"
+            Me.txtColorTextDark = "#171717"
+            Me.txtColorTextLight = "#fff"
+            Me.txtColorTextMuted = "#7c7c7c"
+            Me.txtColorHeaderBackground = "#fff"
+            Me.txtColorRowColor = "#fdfdfd"
+            Me.txtColorRowBorderColor = "#c7c7c7"
+            Me.txtColorTodayHighlight = "#37352f"
+            Me.txtColorWeekendHighlight = "#f7f7f7"
+            Me.txtColorTickColor = "#e0e0e0"
         Case 1
-            Me.txtThemingTaskBarColor = "#3a3a3a"
-            Me.txtThemingBarBorderColor = "#3a3a3a"
-            Me.txtThemingProgressColor = "#4a6baf"
-            Me.txtThemingArrowColor = "#9aa5b1"
-            Me.txtThemingHandleColor = "#555"
-            Me.txtThemingTextDark = "#e0e0e0"
-            Me.txtThemingTextLight = "#f5f5f5"
-            Me.txtThemingTextMuted = "#a0a0a0"
-            Me.txtThemingHeaderBackground = "#1c1c1c"
-            Me.txtThemingRowColor = "#252525"
-            Me.txtThemingRowBorderColor = "#3d3d3d"
-            Me.txtThemingTodayHighlight = "#ff9d48"
-            Me.txtThemingWeekendHighlight = "#2d2d2d"
-            Me.txtThemingTickColor = "#444"
+            Me.txtColorTaskBarColor = "#3a3a3a"
+            Me.txtColorBarBorderColor = "#3a3a3a"
+            Me.txtColorProgressColor = "#4a6baf"
+            Me.txtColorArrowColor = "#9aa5b1"
+            Me.txtColorHandleColor = "#555"
+            Me.txtColorTextDark = "#e0e0e0"
+            Me.txtColorTextLight = "#f5f5f5"
+            Me.txtColorTextMuted = "#a0a0a0"
+            Me.txtColorHeaderBackground = "#1c1c1c"
+            Me.txtColorRowColor = "#252525"
+            Me.txtColorRowBorderColor = "#3d3d3d"
+            Me.txtColorTodayHighlight = "#ff9d48"
+            Me.txtColorWeekendHighlight = "#2d2d2d"
+            Me.txtColorTickColor = "#444"
         Case 2
-            Me.txtThemingTaskBarColor = "#d7e8ff"
-            Me.txtThemingBarBorderColor = "#a9c9f5"
-            Me.txtThemingProgressColor = "#4a90e2"
-            Me.txtThemingArrowColor = "#2f6fbf"
-            Me.txtThemingHandleColor = "#3c5f8c"
-            Me.txtThemingTextDark = "#1c2a3a"
-            Me.txtThemingTextLight = "#f0f6ff"
-            Me.txtThemingTextMuted = "#6b8bb5"
-            Me.txtThemingHeaderBackground = "#e8f1ff"
-            Me.txtThemingRowColor = "#f5f9ff"
-            Me.txtThemingRowBorderColor = "#c7d9f2"
-            Me.txtThemingTodayHighlight = "#4a90e2"
-            Me.txtThemingWeekendHighlight = "#e1ecfa"
-            Me.txtThemingTickColor = "#b4c9e6"
+            Me.txtColorTaskBarColor = "#d7e8ff"
+            Me.txtColorBarBorderColor = "#a9c9f5"
+            Me.txtColorProgressColor = "#4a90e2"
+            Me.txtColorArrowColor = "#2f6fbf"
+            Me.txtColorHandleColor = "#3c5f8c"
+            Me.txtColorTextDark = "#1c2a3a"
+            Me.txtColorTextLight = "#f0f6ff"
+            Me.txtColorTextMuted = "#6b8bb5"
+            Me.txtColorHeaderBackground = "#e8f1ff"
+            Me.txtColorRowColor = "#f5f9ff"
+            Me.txtColorRowBorderColor = "#c7d9f2"
+            Me.txtColorTodayHighlight = "#4a90e2"
+            Me.txtColorWeekendHighlight = "#e1ecfa"
+            Me.txtColorTickColor = "#b4c9e6"
         Case Else
             'Do Nothing
     End Select
