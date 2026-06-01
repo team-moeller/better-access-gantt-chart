@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 1.34.06  published: 23.05.2026                                                      #
+'# Version 2.00.09  published: 01.06.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -38,55 +38,55 @@ Public Sub cmdCreateGanttChart_Click()
     
     Set myGantt.Control = Me.ctlEdgeBrowser
     'Appearance
-    myGantt.Language = Nz(Forms!frm_configuration.cboLanguage, "en")
-    myGantt.ViewMode = Nz(Forms!frm_configuration.cboViewMode, gcViewMode.vwDay)
-    myGantt.ColumnWidth = Nz(Forms!frm_configuration.txtColumnWidth, 45)
-    myGantt.BarHeight = Nz(Forms!frm_configuration.txtBarHeight, 30)
-    myGantt.ArrowCurveRadius = Nz(Forms!frm_configuration.txtArrowCurveRadius, 5)
-    myGantt.TaskBarCurveRadius = Nz(Forms!frm_configuration.txtTaskBarCurveRadius, 3)
-    myGantt.ContainerHight = Nz(Forms!frm_configuration.txtContainerHight, "auto")
-    myGantt.UpperHeaderHight = Nz(Forms!frm_configuration.txtUpperHeaderHight, 45)
-    myGantt.LowerHeaderHight = Nz(Forms!frm_configuration.txtLowerHeaderHight, 30)
-    myGantt.Padding = Nz(Forms!frm_configuration.txtPadding, 18)
-    myGantt.Lines = Nz(Forms!frm_configuration.cboLines, gcLines.lnBoth)
-    myGantt.ScrollTo = Nz(Forms!frm_configuration.cboScrollTo, gcScrollTo.stToday)
-    myGantt.ScrollToDate = Nz(Forms!frm_configuration.txtScrollToDate, Date)
-    myGantt.ShowExpectedProgress = Nz(Forms!frm_configuration.chkShowExpectedProgress, False)
+    myGantt.Appearance.Language = Nz(Forms!frm_configuration.cboLanguage, "en")
+    myGantt.Appearance.ViewMode = Nz(Forms!frm_configuration.cboViewMode, gcViewMode.vwDay)
+    myGantt.Appearance.ColumnWidth = Nz(Forms!frm_configuration.txtColumnWidth, 45)
+    myGantt.Appearance.BarHeight = Nz(Forms!frm_configuration.txtBarHeight, 30)
+    myGantt.Appearance.ArrowCurveRadius = Nz(Forms!frm_configuration.txtArrowCurveRadius, 5)
+    myGantt.Appearance.TaskBarCurveRadius = Nz(Forms!frm_configuration.txtTaskBarCurveRadius, 3)
+    myGantt.Appearance.ContainerHight = Nz(Forms!frm_configuration.txtContainerHight, "auto")
+    myGantt.Appearance.UpperHeaderHight = Nz(Forms!frm_configuration.txtUpperHeaderHight, 45)
+    myGantt.Appearance.LowerHeaderHight = Nz(Forms!frm_configuration.txtLowerHeaderHight, 30)
+    myGantt.Appearance.Padding = Nz(Forms!frm_configuration.txtPadding, 18)
+    myGantt.Appearance.Lines = Nz(Forms!frm_configuration.cboLines, gcLines.lnBoth)
+    myGantt.Appearance.ScrollTo = Nz(Forms!frm_configuration.cboScrollTo, gcScrollTo.stToday)
+    myGantt.Appearance.ScrollToDate = Nz(Forms!frm_configuration.txtScrollToDate, Date)
+    myGantt.Appearance.ShowExpectedProgress = Nz(Forms!frm_configuration.chkShowExpectedProgress, False)
     'Interaction
-    myGantt.ShowTodayButton = Nz(Forms!frm_configuration.chkShowTodayButton, True)
-    myGantt.ViewModeSelect = Nz(Forms!frm_configuration.chkViewModeSelect, False)
-    myGantt.ReadonlyProgress = Nz(Forms!frm_configuration.chkReadOnlyProgress, False)
-    myGantt.ReadonlyDates = Nz(Forms!frm_configuration.chkReadOnlyDates, False)
-    myGantt.ReadonlyChart = Nz(Forms!frm_configuration.chkReadOnlyWholeChart, False)
-    myGantt.AutoMoveLabel = Nz(Forms!frm_configuration.chkAutoMoveLabel, False)
-    myGantt.MoveDependencies = Nz(Forms!frm_configuration.chkMoveDependencies, True)
+    myGantt.Interaction.ShowTodayButton = Nz(Forms!frm_configuration.chkShowTodayButton, True)
+    myGantt.Interaction.ViewModeSelect = Nz(Forms!frm_configuration.chkViewModeSelect, False)
+    myGantt.Interaction.ReadonlyProgress = Nz(Forms!frm_configuration.chkReadOnlyProgress, False)
+    myGantt.Interaction.ReadonlyDates = Nz(Forms!frm_configuration.chkReadOnlyDates, False)
+    myGantt.Interaction.ReadonlyChart = Nz(Forms!frm_configuration.chkReadOnlyWholeChart, False)
+    myGantt.Interaction.AutoMoveLabel = Nz(Forms!frm_configuration.chkAutoMoveLabel, False)
+    myGantt.Interaction.MoveDependencies = Nz(Forms!frm_configuration.chkMoveDependencies, True)
     'Interactivity
-    myGantt.ReactOnClick = Nz(Forms!frm_configuration.chkReactOnClick, True)
-    myGantt.ReactOnProgressChange = Nz(Forms!frm_configuration.chkReactOnProgressChange, True)
-    myGantt.ReactOnDateChange = Nz(Forms!frm_configuration.chkReactOnDateChange, True)
+    myGantt.Interactivity.ReactOnClick = Nz(Forms!frm_configuration.chkReactOnClick, True)
+    myGantt.Interactivity.ReactOnProgressChange = Nz(Forms!frm_configuration.chkReactOnProgressChange, True)
+    myGantt.Interactivity.ReactOnDateChange = Nz(Forms!frm_configuration.chkReactOnDateChange, True)
     'Color
-    myGantt.Theme = Nz(Forms!frm_configuration.fraColorTheme, gcTheme.thDefault)
-    myGantt.ColorTaskBarColor = Nz(Forms!frm_configuration.txtColorTaskBarColor, vbNullString)
-    myGantt.ColorBarBorderColor = Nz(Forms!frm_configuration.txtColorBarBorderColor, vbNullString)
-    myGantt.ColorProgressColor = Nz(Forms!frm_configuration.txtColorProgressColor, vbNullString)
-    myGantt.ColorArrowColor = Nz(Forms!frm_configuration.txtColorArrowColor, vbNullString)
-    myGantt.ColorHandleColor = Nz(Forms!frm_configuration.txtColorHandleColor, vbNullString)
-    myGantt.ColorTextDark = Nz(Forms!frm_configuration.txtColorTextDark, vbNullString)
-    myGantt.ColorTextLight = Nz(Forms!frm_configuration.txtColorTextLight, vbNullString)
-    myGantt.ColorTextMuted = Nz(Forms!frm_configuration.txtColorTextMuted, vbNullString)
-    myGantt.ColorHeaderBackground = Nz(Forms!frm_configuration.txtColorHeaderBackground, vbNullString)
-    myGantt.ColorRowColor = Nz(Forms!frm_configuration.txtColorRowColor, vbNullString)
-    myGantt.ColorRowBorderColor = Nz(Forms!frm_configuration.txtColorRowBorderColor, vbNullString)
-    myGantt.ColorTodayHighlightColor = Nz(Forms!frm_configuration.txtColorTodayHighlight, vbNullString)
-    myGantt.ColorWeekendHighlightColor = Nz(Forms!frm_configuration.txtColorWeekendHighlight, vbNullString)
-    myGantt.ColorTickColor = Nz(Forms!frm_configuration.txtColorTickColor, vbNullString)
+    myGantt.Color.Theme = Nz(Forms!frm_configuration.fraColorTheme, gcTheme.thDefault)
+    myGantt.Color.ColorTaskBarColor = Nz(Forms!frm_configuration.txtColorTaskBarColor, vbNullString)
+    myGantt.Color.ColorBarBorderColor = Nz(Forms!frm_configuration.txtColorBarBorderColor, vbNullString)
+    myGantt.Color.ColorProgressColor = Nz(Forms!frm_configuration.txtColorProgressColor, vbNullString)
+    myGantt.Color.ColorArrowColor = Nz(Forms!frm_configuration.txtColorArrowColor, vbNullString)
+    myGantt.Color.ColorHandleColor = Nz(Forms!frm_configuration.txtColorHandleColor, vbNullString)
+    myGantt.Color.ColorTextDark = Nz(Forms!frm_configuration.txtColorTextDark, vbNullString)
+    myGantt.Color.ColorTextLight = Nz(Forms!frm_configuration.txtColorTextLight, vbNullString)
+    myGantt.Color.ColorTextMuted = Nz(Forms!frm_configuration.txtColorTextMuted, vbNullString)
+    myGantt.Color.ColorHeaderBackground = Nz(Forms!frm_configuration.txtColorHeaderBackground, vbNullString)
+    myGantt.Color.ColorRowColor = Nz(Forms!frm_configuration.txtColorRowColor, vbNullString)
+    myGantt.Color.ColorRowBorderColor = Nz(Forms!frm_configuration.txtColorRowBorderColor, vbNullString)
+    myGantt.Color.ColorTodayHighlightColor = Nz(Forms!frm_configuration.txtColorTodayHighlight, vbNullString)
+    myGantt.Color.ColorWeekendHighlightColor = Nz(Forms!frm_configuration.txtColorWeekendHighlight, vbNullString)
+    myGantt.Color.ColorTickColor = Nz(Forms!frm_configuration.txtColorTickColor, vbNullString)
     'Scripts
-    myGantt.GanttJsSource = Forms!frm_configuration.cboFrappeJsSource
-    myGantt.GanttJsCDN = Forms!frm_configuration.txtFrappeJsCDN
-    myGantt.GanttJsPathFilename = Forms!frm_configuration.txtFrappeJsPathFilename
-    myGantt.GanttCssSource = Forms!frm_configuration.cboFrappeCssSource
-    myGantt.GanttCssCDN = Forms!frm_configuration.txtFrappeCssCDN
-    myGantt.GanttCssPathFilename = Forms!frm_configuration.txtFrappeCssPathFilename
+    myGantt.Scripts.JS.Source = Forms!frm_configuration.cboFrappeJsSource
+    myGantt.Scripts.JS.CDN = Forms!frm_configuration.txtFrappeJsCDN
+    myGantt.Scripts.JS.PathFilename = Forms!frm_configuration.txtFrappeJsPathFilename
+    myGantt.Scripts.CSS.Source = Forms!frm_configuration.cboFrappeCssSource
+    myGantt.Scripts.CSS.CDN = Forms!frm_configuration.txtFrappeCssCDN
+    myGantt.Scripts.CSS.PathFilename = Forms!frm_configuration.txtFrappeCssPathFilename
     
     myGantt.ShowGanttChart
 
