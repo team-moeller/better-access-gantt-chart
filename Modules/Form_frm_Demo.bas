@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.00.09  published: 01.06.2026                                                      #
+'# Version 2.01.05  published: 03.06.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -44,9 +44,9 @@ Public Sub cmdCreateGanttChart_Click()
     myGantt.Appearance.BarHeight = Nz(Forms!frm_configuration.txtBarHeight, 30)
     myGantt.Appearance.ArrowCurveRadius = Nz(Forms!frm_configuration.txtArrowCurveRadius, 5)
     myGantt.Appearance.TaskBarCurveRadius = Nz(Forms!frm_configuration.txtTaskBarCurveRadius, 3)
-    myGantt.Appearance.ContainerHight = Nz(Forms!frm_configuration.txtContainerHight, "auto")
-    myGantt.Appearance.UpperHeaderHight = Nz(Forms!frm_configuration.txtUpperHeaderHight, 45)
-    myGantt.Appearance.LowerHeaderHight = Nz(Forms!frm_configuration.txtLowerHeaderHight, 30)
+    myGantt.Appearance.ContainerHeight = Nz(Forms!frm_configuration.txtContainerHeight, "auto")
+    myGantt.Appearance.UpperHeaderHeight = Nz(Forms!frm_configuration.txtUpperHeaderHeight, 45)
+    myGantt.Appearance.LowerHeaderHeight = Nz(Forms!frm_configuration.txtLowerHeaderHeight, 30)
     myGantt.Appearance.Padding = Nz(Forms!frm_configuration.txtPadding, 18)
     myGantt.Appearance.Lines = Nz(Forms!frm_configuration.cboLines, gcLines.lnBoth)
     myGantt.Appearance.ScrollTo = Nz(Forms!frm_configuration.cboScrollTo, gcScrollTo.stToday)

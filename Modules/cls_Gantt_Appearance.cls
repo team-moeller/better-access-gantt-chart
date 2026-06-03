@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.00.09  published: 01.06.2026                                                      #
+'# Version 2.01.05  published: 03.06.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -24,9 +24,9 @@ Private m_ColumnWidth As Long
 Private m_BarHeight As Long
 Private m_ArrowCurveRadius As Integer
 Private m_TaskBarCurveRadius As Integer
-Private m_ContainerHight As String
-Private m_UpperHeaderHight As Integer
-Private m_LowerHeaderHight As Integer
+Private m_ContainerHeight As String
+Private m_UpperHeaderHeight As Integer
+Private m_LowerHeaderHeight As Integer
 Private m_Padding As Integer
 Private m_Lines As gcLines
 Private m_ScrollTo As gcScrollTo
@@ -77,25 +77,25 @@ Public Property Get TaskBarCurveRadius() As Integer
     TaskBarCurveRadius = m_TaskBarCurveRadius
 End Property
 
-Public Property Let ContainerHight(newValue As String)
-    m_ContainerHight = newValue
+Public Property Let ContainerHeight(newValue As String)
+    m_ContainerHeight = newValue
 End Property
-Public Property Get ContainerHight() As String
-    ContainerHight = m_ContainerHight
-End Property
-
-Public Property Let UpperHeaderHight(newValue As Integer)
-    m_UpperHeaderHight = newValue
-End Property
-Public Property Get UpperHeaderHight() As Integer
-    UpperHeaderHight = m_UpperHeaderHight
+Public Property Get ContainerHeight() As String
+    ContainerHeight = m_ContainerHeight
 End Property
 
-Public Property Let LowerHeaderHight(newValue As Integer)
-    m_LowerHeaderHight = newValue
+Public Property Let UpperHeaderHeight(newValue As Integer)
+    m_UpperHeaderHeight = newValue
 End Property
-Public Property Get LowerHeaderHight() As Integer
-    LowerHeaderHight = m_LowerHeaderHight
+Public Property Get UpperHeaderHeight() As Integer
+    UpperHeaderHeight = m_UpperHeaderHeight
+End Property
+
+Public Property Let LowerHeaderHeight(newValue As Integer)
+    m_LowerHeaderHeight = newValue
+End Property
+Public Property Get LowerHeaderHeight() As Integer
+    LowerHeaderHeight = m_LowerHeaderHeight
 End Property
 
 Public Property Let Padding(newValue As Integer)
@@ -143,9 +143,9 @@ Private Sub Class_Initialize()
     Me.BarHeight = 30
     Me.ArrowCurveRadius = 5
     Me.TaskBarCurveRadius = 3
-    Me.ContainerHight = "auto"
-    Me.UpperHeaderHight = 45
-    Me.LowerHeaderHight = 30
+    Me.ContainerHeight = "auto"
+    Me.UpperHeaderHeight = 45
+    Me.LowerHeaderHeight = 30
     Me.Padding = 18
     Me.Lines = gcLines.lnBoth
     Me.ScrollTo = gcScrollTo.stToday
@@ -172,12 +172,12 @@ Public Function ToScript() As String
     s = s & "            arrow_curve: " & Me.ArrowCurveRadius & "," & vbCrLf
     s = s & "            bar_corner_radius: " & Me.TaskBarCurveRadius & "," & vbCrLf
 
-    If Me.ContainerHight <> "auto" Then
-        s = s & "            container_height: " & Me.ContainerHight & "," & vbCrLf
+    If Me.ContainerHeight <> "auto" Then
+        s = s & "            container_height: " & Me.ContainerHeight & "," & vbCrLf
     End If
 
-    s = s & "            upper_header_height: " & Me.UpperHeaderHight & "," & vbCrLf
-    s = s & "            lower_header_height: " & Me.LowerHeaderHight & "," & vbCrLf
+    s = s & "            upper_header_height: " & Me.UpperHeaderHeight & "," & vbCrLf
+    s = s & "            lower_header_height: " & Me.LowerHeaderHeight & "," & vbCrLf
     s = s & "            padding: " & Me.Padding & "," & vbCrLf
     s = s & "            lines: " & getLines() & "," & vbCrLf
     s = s & "            scroll_to: " & getScrollTo() & "," & vbCrLf
