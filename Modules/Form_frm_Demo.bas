@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.01.05  published: 03.06.2026                                                      #
+'# Version 2.02.05  published: 04.06.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -37,6 +37,15 @@ Public Sub cmdCreateGanttChart_Click()
     Set myGantt = New cls_Better_Access_Gantt_Chart
     
     Set myGantt.Control = Me.ctlEdgeBrowser
+    'Data
+    myGantt.Data.TableName = Nz(Forms!frm_configuration.txtTableName, "tbl_DemoData")
+    myGantt.Data.FieldID = Nz(Forms!frm_configuration.txtFieldID, "TID")
+    myGantt.Data.FieldName = Nz(Forms!frm_configuration.txtFieldName, "TName")
+    myGantt.Data.FieldStart = Nz(Forms!frm_configuration.txtFieldStart, "TStart")
+    myGantt.Data.FieldEnd = Nz(Forms!frm_configuration.txtFieldEnd, "TEnd")
+    myGantt.Data.FieldProgress = Nz(Forms!frm_configuration.txtFieldProgress, "TProgress")
+    myGantt.Data.FieldDependencies = Nz(Forms!frm_configuration.txtFieldDependencies, "TDependencies")
+    myGantt.Data.FieldCustomClass = Nz(Forms!frm_configuration.txtFieldCustomClass, "TCustomClass")
     'Appearance
     myGantt.Appearance.Language = Nz(Forms!frm_configuration.cboLanguage, "en")
     myGantt.Appearance.ViewMode = Nz(Forms!frm_configuration.cboViewMode, gcViewMode.vwDay)

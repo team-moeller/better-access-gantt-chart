@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.01.05  published: 03.06.2026                                                      #
+'# Version 2.02.05  published: 04.06.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -62,6 +62,7 @@ Private m_Interaction As cls_Gantt_Interaction
 Private m_Interactivity As cls_Gantt_Interactivity
 Private m_Color As cls_Gantt_Color
 Private m_Scripts As cls_Gantt_Scripts
+Private m_Data As cls_Gantt_Data
 
 
 '### Properties
@@ -107,6 +108,13 @@ Public Property Set Scripts(newValue As cls_Gantt_Scripts)
     Set m_Scripts = newValue
 End Property
 
+Public Property Get Data() As cls_Gantt_Data
+    Set Data = m_Data
+End Property
+Public Property Set Data(newValue As cls_Gantt_Data)
+    Set m_Data = newValue
+End Property
+
 
 '### Instantiation
 Private Sub Class_Initialize()
@@ -116,6 +124,7 @@ Private Sub Class_Initialize()
     Set Me.Interactivity = New cls_Gantt_Interactivity
     Set Me.Color = New cls_Gantt_Color
     Set Me.Scripts = New cls_Gantt_Scripts
+    Set Me.Data = New cls_Gantt_Data
 
 End Sub
 
@@ -198,7 +207,6 @@ Private Function getHead() As String
 
     'Scripts (JS + CSS)
     s = s & Me.Scripts.ToHtml
-
     'Colors
     s = s & Me.Color.ToHtml
 
@@ -221,7 +229,7 @@ Private Function getScript() As String
     s = s & "        window.AccessEdgeBridge = null;" & vbCrLf
 
     'Tasks
-    s = s & getTaskData
+    s = s & Me.Data.ToScript
 
     'Gantt init
     s = s & "        const gantt = new Gantt('#gantt', tasks, {" & vbCrLf
@@ -248,53 +256,3 @@ Private Function getFoot() As String
     getFoot = s
     
 End Function
-
-Private Function getTaskData() As String
-
-    'Variables
-    Dim db As DAO.Database
-    Dim rst As DAO.Recordset
-    Dim strSQL As String
-    Dim s As String
-    
-    Set db = CurrentDb()
-    strSQL = "Select * from tbl_DemoData"
-    Set rst = db.OpenRecordset(strSQL, dbOpenSnapshot)
-    
-    s = s & "        const tasks = [" & vbCrLf
-    
-    Do While Not rst.EOF
-        s = s & "            {"
-        s = s & "id: '" & rst!TID & "', "
-        s = s & "name: '" & rst!TName & "', "
-        s = s & "start: '" & Format$(rst!TStart, "YYYY-MM-DD") & "', "
-        s = s & "end: '" & Format$(rst!TEnd, "YYYY-MM-DD") & "', "
-        s = s & "progress: '" & rst!TProgress & "', "
-        
-        If Trim$(Nz(rst!TDependencies, vbNullString)) <> vbNullString Then
-            s = s & "dependencies: '" & rst!TDependencies & "', "
-        End If
-        
-        If Trim$(Nz(rst!TCustomClass, vbNullString)) <> vbNullString Then
-            s = s & "custom_class: '" & rst!TCustomClass & "'"
-        End If
-        
-        If Right$(s, 2) = ", " Then
-            s = Left$(s, Len(s) - 2)
-        End If
-        
-        s = s & "}," & vbCrLf
-        rst.MoveNext
-    Loop
-    
-    s = Left$(s, Len(s) - 3) & vbCrLf
-    s = s & "        ];" & vbCrLf
-    
-    getTaskData = s
-    
-    rst.Close
-    Set rst = Nothing
-    Set db = Nothing
-    
-End Function
-
