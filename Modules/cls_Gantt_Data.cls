@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.02.05  published: 04.06.2026                                                      #
+'# Version 2.03.03  published: 05.06.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -124,17 +124,17 @@ Public Function ToScript() As String
 
         s = s & "            {"
         s = s & "id: '" & rst(Me.FieldID) & "', "
-        s = s & "name: '" & rst(Me.FieldName) & "', "
+        s = s & "name: '" & EscapeJsString(rst(Me.FieldName)) & "', "
         s = s & "start: '" & Format$(rst(Me.FieldStart), "YYYY-MM-DD") & "', "
         s = s & "end: '" & Format$(rst(Me.FieldEnd), "YYYY-MM-DD") & "', "
         s = s & "progress: '" & rst(Me.FieldProgress) & "', "
 
         If Trim$(Nz(rst(Me.FieldDependencies), vbNullString)) <> vbNullString Then
-            s = s & "dependencies: '" & rst(Me.FieldDependencies) & "', "
+            s = s & "dependencies: '" & EscapeJsString(rst(Me.FieldDependencies)) & "', "
         End If
 
         If Trim$(Nz(rst(Me.FieldCustomClass), vbNullString)) <> vbNullString Then
-            s = s & "custom_class: '" & rst(Me.FieldCustomClass) & "'"
+            s = s & "custom_class: '" & EscapeJsString(rst(Me.FieldCustomClass)) & "'"
         End If
 
         If Right$(s, 2) = ", " Then
@@ -157,3 +157,14 @@ Public Function ToScript() As String
 
 End Function
 
+Private Function EscapeJsString(s As String) As String
+
+    s = Replace(s, "\", "\\")
+    s = Replace(s, "'", "\'")
+    s = Replace(s, vbCrLf, "\n")
+    s = Replace(s, vbCr, "\n")
+    s = Replace(s, vbLf, "\n")
+    
+    EscapeJsString = s
+
+End Function
