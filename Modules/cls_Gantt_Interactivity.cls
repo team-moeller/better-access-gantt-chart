@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.03.03  published: 05.06.2026                                                      #
+'# Version 2.04.03  published: 04.07.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -69,19 +69,31 @@ Public Function ToScript() As String
     If Me.ReactOnClick Then
         s = s & "            on_click: function(task) {" & vbCrLf
         s = s & "                if (window.AccessEdgeBridge !== null) { return; }" & vbCrLf
-        s = s & "                window.AccessEdgeBridge = task.id;" & vbCrLf
+        s = s & "                window.AccessEdgeBridge = JSON.stringify({" & vbCrLf
+        s = s & "                event: 'click'," & vbCrLf
+        s = s & "                id: task.id " & vbCrLf
+        s = s & "                });" & vbCrLf
         s = s & "            }," & vbCrLf
     End If
 
     If Me.ReactOnProgressChange Then
         s = s & "            on_progress_change: function(task, progress) {" & vbCrLf
-        s = s & "                window.AccessEdgeBridge = task.id + '|' + progress;" & vbCrLf
+        s = s & "                window.AccessEdgeBridge = JSON.stringify({" & vbCrLf
+        s = s & "                event: 'progress'," & vbCrLf
+        s = s & "                id: task.id , " & vbCrLf
+        s = s & "                progress: progress " & vbCrLf
+        s = s & "                });" & vbCrLf
         s = s & "            }," & vbCrLf
     End If
 
     If Me.ReactOnDateChange Then
         s = s & "            on_date_change: function(task, start, end) {" & vbCrLf
-        s = s & "                window.AccessEdgeBridge = task.id + '|' + start + '|' + end;" & vbCrLf
+        s = s & "                window.AccessEdgeBridge = JSON.stringify({" & vbCrLf
+        s = s & "                event: 'datechange'," & vbCrLf
+        s = s & "                id: task.id , " & vbCrLf
+        s = s & "                start: start , " & vbCrLf
+        s = s & "                end: end " & vbCrLf
+        s = s & "                });" & vbCrLf
         s = s & "            }," & vbCrLf
     End If
 
