@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.05.01  published: 05.07.2026                                                      #
+'# Version 2.06.04  published: 06.07.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -160,11 +160,11 @@ End Sub
 Public Function RetrieveBridgeVariable() As String
 
     'Variables
-    Dim Value As String
+    Dim value As String
     
-    Value = Me.Control.RetrieveJavascriptValue("window.AccessEdgeBridge")
+    value = Me.Control.RetrieveJavascriptValue("window.AccessEdgeBridge")
 
-    RetrieveBridgeVariable = Value
+    RetrieveBridgeVariable = value
 
 End Function
 

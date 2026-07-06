@@ -2,7 +2,7 @@ Attribute VB_Name = "mdl_Helpers"
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.05.01  published: 05.07.2026                                                      #
+'# Version 2.06.04  published: 06.07.2026                                                      #
 '###############################################################################################
 
 Option Compare Database

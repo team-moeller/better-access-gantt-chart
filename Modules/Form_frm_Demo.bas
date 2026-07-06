@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.05.01  published: 05.07.2026                                                      #
+'# Version 2.06.04  published: 06.07.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -104,14 +104,105 @@ End Sub
 Private Sub ctlEdgeBrowser_Click()
 
     'Variables
-    Dim Value As String
+    Dim value As String
+    Dim obj As Object
     
-    Value = myGantt.RetrieveBridgeVariable
+    value = myGantt.RetrieveBridgeVariable
     
-    If Value <> "null" Then
-        MsgBox Value
-    End If
+    If value = "null" Then Exit Sub
+    
+    Set obj = ParseEvent(value)
+    
+    Select Case obj("event")
+        Case "click"
+            MsgBox "ID: " & obj("id") & vbCrLf, , _
+                   "Event: " & obj("event")
+        Case "progress"
+            MsgBox "ID: " & obj("id") & vbCrLf & _
+                   "Progress: " & obj("progress"), , _
+                   "Event: " & obj("event")
+        Case "datechange"
+        Debug.Print value
+            MsgBox "ID: " & obj("id") & vbCrLf & _
+                   "Start: " & obj("start") & vbCrLf & _
+                   "End: " & obj("end"), , _
+                   "Event: " & obj("event")
+        Case Else
+            MsgBox "Event unknown"
+    End Select
     
     myGantt.ResetBridgeVariable
 
 End Sub
+
+Private Function ParseEvent(raw As String) As Object
+
+    'Variables
+    Dim json As String
+    
+    json = ExtractJsonPart(raw)
+
+    If json = "" Then
+        Set ParseEvent = Nothing
+        Exit Function
+    End If
+
+    Set ParseEvent = ParseSimpleJson(json)
+    
+End Function
+
+Function ExtractJsonPart(raw As String) As String
+
+    'Variables
+    Dim pos As Long
+    
+    pos = InStr(raw, "}")
+    If pos > 0 Then
+        ExtractJsonPart = Left(raw, pos)
+    Else
+        ExtractJsonPart = ""
+    End If
+    
+End Function
+
+Private Function ParseSimpleJson(json As String) As Object
+
+    'Variables
+    Dim dict As Object
+    Dim cleaned As String
+    Dim parts() As String
+    Dim p As Variant
+    Dim pos As Long
+    Dim key As String
+    Dim val As String
+
+    Set dict = CreateObject("Scripting.Dictionary")
+
+    cleaned = Replace(json, "{", "")
+    cleaned = Replace(cleaned, "}", "")
+
+    parts = Split(cleaned, ",")
+
+    For Each p In parts
+        pos = InStr(1, p, ":")
+        If pos > 0 Then
+            key = Left$(p, pos - 1)
+            val = Mid$(p, pos + 1)
+
+            key = Replace(key, """", "")
+            key = Trim$(key)
+            val = Trim$(Replace(val, """", ""))
+
+            ' Numbers vs. Strings
+            If IsNumeric(val) Then
+                dict(key) = CLng(val)
+            Else
+                dict(key) = val
+            End If
+        End If
+    Next p
+
+    Set ParseSimpleJson = dict
+    
+End Function
+
