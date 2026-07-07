@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.06.04  published: 06.07.2026                                                      #
+'# Version 2.07.03  published: 07.07.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -135,41 +135,11 @@ Private Sub ctlEdgeBrowser_Click()
 
 End Sub
 
-Private Function ParseEvent(raw As String) As Object
-
-    'Variables
-    Dim json As String
-    
-    json = ExtractJsonPart(raw)
-
-    If json = "" Then
-        Set ParseEvent = Nothing
-        Exit Function
-    End If
-
-    Set ParseEvent = ParseSimpleJson(json)
-    
-End Function
-
-Function ExtractJsonPart(raw As String) As String
-
-    'Variables
-    Dim pos As Long
-    
-    pos = InStr(raw, "}")
-    If pos > 0 Then
-        ExtractJsonPart = Left(raw, pos)
-    Else
-        ExtractJsonPart = ""
-    End If
-    
-End Function
-
-Private Function ParseSimpleJson(json As String) As Object
+Function ParseEvent(raw As String) As Object
 
     'Variables
     Dim dict As Object
-    Dim cleaned As String
+    Dim json As String
     Dim parts() As String
     Dim p As Variant
     Dim pos As Long
@@ -177,11 +147,11 @@ Private Function ParseSimpleJson(json As String) As Object
     Dim val As String
 
     Set dict = CreateObject("Scripting.Dictionary")
-
-    cleaned = Replace(json, "{", "")
-    cleaned = Replace(cleaned, "}", "")
-
-    parts = Split(cleaned, ",")
+    
+    'Extract json
+    json = Left$(raw, InStr(raw, "}"))
+    json = Mid$(json, 2, Len(json) - 2)          ' remove { }
+    parts = Split(json, ",")
 
     For Each p In parts
         pos = InStr(1, p, ":")
@@ -202,7 +172,6 @@ Private Function ParseSimpleJson(json As String) As Object
         End If
     Next p
 
-    Set ParseSimpleJson = dict
+    Set ParseEvent = dict
     
 End Function
-
