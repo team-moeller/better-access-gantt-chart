@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.07.03  published: 07.07.2026                                                      #
+'# Version 2.08.01  published: 08.07.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -122,7 +122,6 @@ Private Sub ctlEdgeBrowser_Click()
                    "Progress: " & obj("progress"), , _
                    "Event: " & obj("event")
         Case "datechange"
-        Debug.Print value
             MsgBox "ID: " & obj("id") & vbCrLf & _
                    "Start: " & obj("start") & vbCrLf & _
                    "End: " & obj("end"), , _
