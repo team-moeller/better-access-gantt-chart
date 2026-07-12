@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.08.01  published: 08.07.2026                                                      #
+'# Version 2.09.01  published: 12.07.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -118,9 +118,7 @@ Private Sub ctlEdgeBrowser_Click()
             MsgBox "ID: " & obj("id") & vbCrLf, , _
                    "Event: " & obj("event")
         Case "progress"
-            MsgBox "ID: " & obj("id") & vbCrLf & _
-                   "Progress: " & obj("progress"), , _
-                   "Event: " & obj("event")
+            Call UpdateProgress(obj)
         Case "datechange"
             MsgBox "ID: " & obj("id") & vbCrLf & _
                    "Start: " & obj("start") & vbCrLf & _
@@ -174,3 +172,24 @@ Function ParseEvent(raw As String) As Object
     Set ParseEvent = dict
     
 End Function
+
+Private Sub UpdateProgress(obj As Object)
+
+    'Variables
+    Dim strMessage As String
+    Dim res As Integer
+    Dim strSQL As String
+    
+    strMessage = "Do you want to update the progress" & vbCrLf & _
+                 "for " & obj("id") & " to " & obj("progress") & " percent?"
+    res = MsgBox(strMessage, vbQuestion + vbYesNo + vbDefaultButton2, "Update progress?")
+    
+    If res = vbYes Then
+        strSQL = "Update " & myGantt.Data.TableName & " " & _
+                 "Set " & myGantt.Data.FieldProgress & " = " & obj("progress") & " " & _
+                 "Where " & myGantt.Data.FieldID & " = '" & obj("id") & "'"
+        CurrentDb.Execute strSQL
+        MsgBox "Progress updated", vbInformation, "Better Access Gantt Chart"
+    End If
+
+End Sub
