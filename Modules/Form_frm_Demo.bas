@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.09.01  published: 12.07.2026                                                      #
+'# Version 2.10.02  published: 13.07.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -120,10 +120,7 @@ Private Sub ctlEdgeBrowser_Click()
         Case "progress"
             Call UpdateProgress(obj)
         Case "datechange"
-            MsgBox "ID: " & obj("id") & vbCrLf & _
-                   "Start: " & obj("start") & vbCrLf & _
-                   "End: " & obj("end"), , _
-                   "Event: " & obj("event")
+            Call UpdatesDates(obj)
         Case Else
             MsgBox "Event unknown"
     End Select
@@ -190,6 +187,30 @@ Private Sub UpdateProgress(obj As Object)
                  "Where " & myGantt.Data.FieldID & " = '" & obj("id") & "'"
         CurrentDb.Execute strSQL
         MsgBox "Progress updated", vbInformation, "Better Access Gantt Chart"
+    End If
+
+End Sub
+
+Private Sub UpdatesDates(obj As Object)
+
+    'Variables
+    Dim strMessage As String
+    Dim res As Integer
+    Dim strSQL As String
+    
+    strMessage = "Do you want to update" & vbCrLf & _
+                 "the dates for " & obj("id") & " to" & vbCrLf & _
+                 "Start: " & obj("start") & vbCrLf & _
+                 "End: " & obj("end")
+    res = MsgBox(strMessage, vbQuestion + vbYesNo + vbDefaultButton2, "Update dates?")
+    
+    If res = vbYes Then
+        strSQL = "Update " & myGantt.Data.TableName & " Set " & _
+                 myGantt.Data.FieldStart & " = #" & obj("start") & "#, " & _
+                 myGantt.Data.FieldEnd & " = #" & obj("end") & "# " & _
+                 "Where " & myGantt.Data.FieldID & " = '" & obj("id") & "'"
+        CurrentDb.Execute strSQL
+        MsgBox "Dates updated", vbInformation, "Better Access Gantt Chart"
     End If
 
 End Sub

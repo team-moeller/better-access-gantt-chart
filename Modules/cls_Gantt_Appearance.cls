@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.09.01  published: 12.07.2026                                                      #
+'# Version 2.10.02  published: 13.07.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -186,7 +186,6 @@ Public Function ToScript() As String
         s = s & "            show_expected_progress: true," & vbCrLf
     End If
 
-    s = Left$(s, Len(s) - 3) & vbCrLf
     ToScript = s
     
 End Function
