@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.10.02  published: 13.07.2026                                                      #
+'# Version 2.11.01  published: 15.07.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -109,6 +109,7 @@ Public Function ToScript() As String
     If Me.ReadonlyChart Then s = s & "            readonly: true," & vbCrLf
     If Me.AutoMoveLabel Then s = s & "            auto_move_label: true," & vbCrLf
     If Not Me.MoveDependencies Then s = s & "            move_dependencies: false," & vbCrLf
+    s = s & "            popup: false," & vbCrLf
 
     If Len(s) > 0 Then s = Left$(s, Len(s) - 3) & vbCrLf
 
