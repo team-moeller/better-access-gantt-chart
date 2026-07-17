@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.11.01  published: 15.07.2026                                                      #
+'# Version 2.12.05  published: 17.07.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -25,6 +25,7 @@ Private m_ReadonlyDates As Boolean
 Private m_ReadonlyChart As Boolean
 Private m_AutoMoveLabel As Boolean
 Private m_MoveDependencies As Boolean
+Private m_ShowPopup As Boolean
 
 
 '### Properties
@@ -77,6 +78,13 @@ Public Property Get MoveDependencies() As Boolean
     MoveDependencies = m_MoveDependencies
 End Property
 
+Public Property Let ShowPopup(newValue As Boolean)
+    m_ShowPopup = newValue
+End Property
+Public Property Get ShowPopup() As Boolean
+    ShowPopup = m_ShowPopup
+End Property
+
 
 '### Initialization
 Private Sub Class_Initialize()
@@ -88,6 +96,7 @@ Private Sub Class_Initialize()
     Me.ReadonlyChart = False
     Me.AutoMoveLabel = False
     Me.MoveDependencies = True
+    Me.ShowPopup = False
     
 End Sub
 
@@ -109,8 +118,8 @@ Public Function ToScript() As String
     If Me.ReadonlyChart Then s = s & "            readonly: true," & vbCrLf
     If Me.AutoMoveLabel Then s = s & "            auto_move_label: true," & vbCrLf
     If Not Me.MoveDependencies Then s = s & "            move_dependencies: false," & vbCrLf
-    s = s & "            popup: false," & vbCrLf
-
+    If Not Me.ShowPopup Then s = s & "            popup: false," & vbCrLf
+    
     If Len(s) > 0 Then s = Left$(s, Len(s) - 3) & vbCrLf
 
     ToScript = s
