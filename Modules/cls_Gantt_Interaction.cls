@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.12.05  published: 17.07.2026                                                      #
+'# Version 2.13.07  published: 18.07.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -26,6 +26,7 @@ Private m_ReadonlyChart As Boolean
 Private m_AutoMoveLabel As Boolean
 Private m_MoveDependencies As Boolean
 Private m_ShowPopup As Boolean
+Private m_PopupOn As gcPopupOn
 
 
 '### Properties
@@ -85,6 +86,13 @@ Public Property Get ShowPopup() As Boolean
     ShowPopup = m_ShowPopup
 End Property
 
+Public Property Let PopupOn(newValue As gcPopupOn)
+    m_PopupOn = newValue
+End Property
+Public Property Get PopupOn() As gcPopupOn
+    PopupOn = m_PopupOn
+End Property
+
 
 '### Initialization
 Private Sub Class_Initialize()
@@ -97,6 +105,7 @@ Private Sub Class_Initialize()
     Me.AutoMoveLabel = False
     Me.MoveDependencies = True
     Me.ShowPopup = False
+    Me.PopupOn = gcPopupOn.poClick
     
 End Sub
 
@@ -118,7 +127,13 @@ Public Function ToScript() As String
     If Me.ReadonlyChart Then s = s & "            readonly: true," & vbCrLf
     If Me.AutoMoveLabel Then s = s & "            auto_move_label: true," & vbCrLf
     If Not Me.MoveDependencies Then s = s & "            move_dependencies: false," & vbCrLf
-    If Not Me.ShowPopup Then s = s & "            popup: false," & vbCrLf
+    If Not Me.ShowPopup Then
+        s = s & "            popup: false," & vbCrLf
+    Else
+        If Not Me.PopupOn = gcPopupOn.poClick Then
+            s = s & "            popup_on: 'hover'," & vbCrLf
+        End If
+    End If
     
     If Len(s) > 0 Then s = Left$(s, Len(s) - 3) & vbCrLf
 

@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.12.05  published: 17.07.2026                                                      #
+'# Version 2.13.07  published: 18.07.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -39,6 +39,12 @@ Private Sub cboScrollTo_AfterUpdate()
         Case Else
             Me.txtScrollToDate.Enabled = False
     End Select
+
+End Sub
+
+Private Sub chkShowPopup_AfterUpdate()
+
+    Me.cboPopupOn.Enabled = Me.chkShowPopup
 
 End Sub
 

@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.12.05  published: 17.07.2026                                                      #
+'# Version 2.13.07  published: 18.07.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -51,6 +51,11 @@ Public Enum gcTheme
     thDefault = 0
     thDarkMode = 1
     thBlue = 2
+End Enum
+
+Public Enum gcPopupOn
+    poClick = 1
+    poHover = 2
 End Enum
 
 
