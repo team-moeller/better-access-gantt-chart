@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.13.07  published: 18.07.2026                                                      #
+'# Version 2.14.01  published: 19.07.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -88,11 +88,15 @@ Public Function ToScript() As String
 
     If Me.ReactOnDateChange Then
         s = s & "            on_date_change: function(task, start, end) {" & vbCrLf
+        s = s & "                const startLocal = new Date(start.getTime() - start.getTimezoneOffset() * 60000)" & vbCrLf
+        s = s & "                    .toISOString().substring(0, 10);" & vbCrLf
+        s = s & "                const endLocal = new Date(end.getTime() - end.getTimezoneOffset() * 60000)" & vbCrLf
+        s = s & "                    .toISOString().substring(0, 10);" & vbCrLf
         s = s & "                window.AccessEdgeBridge = JSON.stringify({" & vbCrLf
         s = s & "                event: 'datechange'," & vbCrLf
-        s = s & "                id: task.id , " & vbCrLf
-        s = s & "                start: start.toISOString().substring(0, 10), " & vbCrLf
-        s = s & "                end: end.toISOString().substring(0, 10) " & vbCrLf
+        s = s & "                id: task.id ," & vbCrLf
+        s = s & "                start: startLocal," & vbCrLf
+        s = s & "                end: endLocal " & vbCrLf
         s = s & "                });" & vbCrLf
         s = s & "            }," & vbCrLf
     End If
