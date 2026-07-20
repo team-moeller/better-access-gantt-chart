@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.14.01  published: 19.07.2026                                                      #
+'# Version 2.15.02  published: 20.07.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -117,8 +117,7 @@ Private Sub ctlEdgeBrowser_Click()
     
     Select Case obj("event")
         Case "click"
-            MsgBox "ID: " & obj("id") & vbCrLf, , _
-                   "Event: " & obj("event")
+            DoCmd.OpenForm "zfrm_Task", , , "TID = '" & obj("id") & "'", acFormReadOnly, acDialog
         Case "progress"
             Call UpdateProgress(obj)
         Case "datechange"
