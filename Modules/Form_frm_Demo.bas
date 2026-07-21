@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.15.02  published: 20.07.2026                                                      #
+'# Version 2.16.05  published: 21.07.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -117,7 +117,7 @@ Private Sub ctlEdgeBrowser_Click()
     
     Select Case obj("event")
         Case "click"
-            DoCmd.OpenForm "zfrm_Task", , , "TID = '" & obj("id") & "'", acFormReadOnly, acDialog
+            Call HandleClick(obj)
         Case "progress"
             Call UpdateProgress(obj)
         Case "datechange"
@@ -170,6 +170,36 @@ Function ParseEvent(raw As String) As Object
     Set ParseEvent = dict
     
 End Function
+
+Private Sub HandleClick(obj As Object)
+    
+    'Variables
+    Dim frm As Access.Form
+    Dim JS As String
+    Dim json As String
+    
+    DoCmd.OpenForm "zfrm_Task", , , "TID = '" & obj("id") & "'", , acDialog
+    Set frm = Forms("zfrm_Task")
+    
+    If frm.UpdateTask = True Then
+        json = "{ " & _
+                "'id': '" & frm.txtTID & "', " & _
+                "'name': '" & frm.txtTName & "', " & _
+                "'start': '" & Format(frm.txtTStart, "yyyy-mm-dd") & "', " & _
+                "'end': '" & Format(frm.txtTEnd, "yyyy-mm-dd") & "', " & _
+                "'progress': '" & frm.txtTProgress & "', " & _
+                "'dependencies': '" & frm.txtTDependencies & "', " & _
+                "'custom_class': '" & frm.txtTCustomClass & "'" & _
+               " }"
+        
+        JS = "updateTaskFromAccess('" & frm.txtTID.OldValue & "', " & json & ");"
+        myGantt.Control.ExecuteJavascript JS
+    End If
+
+    DoCmd.Close acForm, frm.Name
+    Set frm = Nothing
+
+End Sub
 
 Private Sub UpdateProgress(obj As Object)
 

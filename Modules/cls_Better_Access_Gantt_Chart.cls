@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.15.02  published: 20.07.2026                                                      #
+'# Version 2.16.05  published: 21.07.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -232,7 +232,10 @@ Private Function getScript() As String
     
     s = s & "    <script>" & vbCrLf
     s = s & "        window.AccessEdgeBridge = null;" & vbCrLf
-
+    
+    'Update task from Access
+    s = s & Me.Interactivity.UpdateFunctionToScript
+    
     'Tasks
     s = s & Me.Data.ToScript
 

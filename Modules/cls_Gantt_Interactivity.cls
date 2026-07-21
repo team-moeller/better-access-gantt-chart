@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.15.02  published: 20.07.2026                                                      #
+'# Version 2.16.05  published: 21.07.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -61,6 +61,41 @@ End Sub
 
 
 '### JS Output
+Public Function UpdateFunctionToScript() As String
+
+    'Variables
+    Dim s As String
+
+    If 1 = 1 Then
+        s = s & "        function updateTaskFromAccess(taskId, updatedValues) {" & vbCrLf
+        s = s & "            console.log('LiveSync (all attributes):', taskId, updatedValues);" & vbCrLf
+        s = s & "            const task = tasks.find(t => t.id === taskId);" & vbCrLf
+        s = s & "            if (!task) {" & vbCrLf
+        s = s & "                console.error('Task not found:', taskId);" & vbCrLf
+        s = s & "                return;" & vbCrLf
+        s = s & "            }" & vbCrLf
+        s = s & "            for (const key in updatedValues) {" & vbCrLf
+        s = s & "                if (!updatedValues.hasOwnProperty(key)) continue;" & vbCrLf
+        s = s & "                let value = updatedValues[key];" & vbCrLf
+        s = s & "                if (key === 'start' || key === 'end') {" & vbCrLf
+        s = s & "                    value = new Date(value);" & vbCrLf
+        s = s & "                }" & vbCrLf
+        s = s & "                if (key === 'progress') {" & vbCrLf
+        s = s & "                    value = parseInt(value);" & vbCrLf
+        s = s & "                }" & vbCrLf
+        s = s & "                if (key === 'dependencies' && typeof value === 'string') {" & vbCrLf
+        s = s & "                    value = value.split(',').map(v => v.trim());" & vbCrLf
+        s = s & "                }" & vbCrLf
+        s = s & "                task[key] = value;" & vbCrLf
+        s = s & "            }" & vbCrLf
+        s = s & "            gantt.refresh(tasks);" & vbCrLf
+        s = s & "        }" & vbCrLf
+    End If
+
+    UpdateFunctionToScript = s
+    
+End Function
+
 Public Function ToScript() As String
 
     'Variables

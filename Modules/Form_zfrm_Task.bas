@@ -2,7 +2,7 @@ VERSION 1.0 CLASS
 BEGIN
   MultiUse = -1  'True
 END
-Attribute VB_Name = "Form_frm_Startup"
+Attribute VB_Name = "Form_zfrm_Task"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = True
@@ -16,17 +16,26 @@ Attribute VB_Exposed = False
 Option Compare Database
 Option Explicit
 
-Private Sub Form_Load()
+Public UpdateTask As Boolean
 
-    Me.lblVersion.Caption = "Version: " & DMax("V_Number", "tbl_VersionHistory")
+Private Sub Form_BeforeUpdate(Cancel As Integer)
 
+    If Me.UpdateTask = False Then
+        Me.Undo
+    End If
+    
 End Sub
 
-Private Sub cmdDemo_Click()
+Private Sub cmdExit_Click()
 
-    DoCmd.Close acForm, Me.Name
-    DoEvents
-    DoCmd.OpenForm "frm_Demo"
-
+    Me.UpdateTask = False
+    Me.Visible = False
+    
 End Sub
 
+Private Sub cmdUpdateTaskFromAccess_Click()
+
+    Me.UpdateTask = True
+    Me.Visible = False
+
+End Sub
