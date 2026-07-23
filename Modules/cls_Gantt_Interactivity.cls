@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.16.05  published: 21.07.2026                                                      #
+'# Version 2.17.01  published: 23.07.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -67,7 +67,22 @@ Public Function UpdateFunctionToScript() As String
     Dim s As String
 
     If 1 = 1 Then
+        s = s & "        let lastScrollLeft = 0;" & vbCrLf
+        s = s & "        let lastScrollTop = 0;" & vbCrLf
+        s = s & "        function saveScrollPosition() {" & vbCrLf
+        s = s & "            const container = document.querySelector('#gantt .gantt-container');" & vbCrLf
+        s = s & "            if (!container) return;" & vbCrLf
+        s = s & "            lastScrollLeft = container.scrollLeft;" & vbCrLf
+        s = s & "            lastScrollTop = container.scrollTop;" & vbCrLf
+        s = s & "        }" & vbCrLf
+        s = s & "        function restoreScrollPosition() {" & vbCrLf
+        s = s & "            const container = document.querySelector('#gantt .gantt-container');" & vbCrLf
+        s = s & "            if (!container) return;" & vbCrLf
+        s = s & "            container.scrollLeft = lastScrollLeft;" & vbCrLf
+        s = s & "            container.scrollTop = lastScrollTop;" & vbCrLf
+        s = s & "        }" & vbCrLf
         s = s & "        function updateTaskFromAccess(taskId, updatedValues) {" & vbCrLf
+        s = s & "            saveScrollPosition();" & vbCrLf
         s = s & "            console.log('LiveSync (all attributes):', taskId, updatedValues);" & vbCrLf
         s = s & "            const task = tasks.find(t => t.id === taskId);" & vbCrLf
         s = s & "            if (!task) {" & vbCrLf
@@ -89,6 +104,7 @@ Public Function UpdateFunctionToScript() As String
         s = s & "                task[key] = value;" & vbCrLf
         s = s & "            }" & vbCrLf
         s = s & "            gantt.refresh(tasks);" & vbCrLf
+        s = s & "            restoreScrollPosition();" & vbCrLf
         s = s & "        }" & vbCrLf
     End If
 

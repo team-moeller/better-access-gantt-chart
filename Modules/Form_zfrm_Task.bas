@@ -7,16 +7,10 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-'###############################################################################################
-'# Copyright (c) 2026 Thomas Möller                                                            #
-'# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.16.05  published: 21.07.2026                                                      #
-'###############################################################################################
-
-Option Compare Database
 Option Explicit
+Option Compare Database
 
-Public UpdateTask As Boolean
+'# Version 2.17.01  published: 23.07.2026                                                      #
 
 Private Sub Form_BeforeUpdate(Cancel As Integer)
 
