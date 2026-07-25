@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 '###############################################################################################
 '# Copyright (c) 2026 Thomas Möller                                                            #
 '# MIT License  => https://github.com/team-moeller/better-access-gantt-chart/blob/main/LICENSE #
-'# Version 2.17.01  published: 23.07.2026                                                      #
+'# Version 2.18.01  published: 25.07.2026                                                      #
 '###############################################################################################
 
 Option Compare Database
@@ -93,10 +93,15 @@ Public Function UpdateFunctionToScript() As String
         s = s & "                if (!updatedValues.hasOwnProperty(key)) continue;" & vbCrLf
         s = s & "                let value = updatedValues[key];" & vbCrLf
         s = s & "                if (key === 'start' || key === 'end') {" & vbCrLf
-        s = s & "                    value = new Date(value);" & vbCrLf
+        s = s & "                    const d = new Date(value);" & vbCrLf
+        s = s & "                    const local = new Date(d.getTime() + d.getTimezoneOffset() * 60000);" & vbCrLf
+        s = s & "                    if (key === 'end') {" & vbCrLf
+        s = s & "                        local.setHours(23, 59, 59, 999);"
+        s = s & "                    }" & vbCrLf
+        s = s & "                    value = local;" & vbCrLf
         s = s & "                }" & vbCrLf
         s = s & "                if (key === 'progress') {" & vbCrLf
-        s = s & "                    value = parseInt(value);" & vbCrLf
+        s = s & "                    value = parseFloat(value);" & vbCrLf
         s = s & "                }" & vbCrLf
         s = s & "                if (key === 'dependencies' && typeof value === 'string') {" & vbCrLf
         s = s & "                    value = value.split(',').map(v => v.trim());" & vbCrLf
@@ -104,7 +109,7 @@ Public Function UpdateFunctionToScript() As String
         s = s & "                task[key] = value;" & vbCrLf
         s = s & "            }" & vbCrLf
         s = s & "            gantt.refresh(tasks);" & vbCrLf
-        s = s & "            restoreScrollPosition();" & vbCrLf
+        s = s & "            requestAnimationFrame(restoreScrollPosition);" & vbCrLf
         s = s & "        }" & vbCrLf
     End If
 
